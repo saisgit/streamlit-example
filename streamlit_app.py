@@ -28,7 +28,13 @@ class NSE():
       return list(df.index)
     else:
       return df
-
+      
+def add(ss):
+  st.write(ss)
+  
+if st.button('add'):
+    result = add("hello")
+    st.write('result: %s' % result)
 nse = NSE()
 high = nse.equity_market_data("Securities in F&O")[['open','dayHigh','dayLow','lastPrice','totalTradedVolume','previousClose']].reset_index()
 high = high.rename(columns={"totalTradedVolume": "volume",'lastPrice':'Close'})
