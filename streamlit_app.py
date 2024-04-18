@@ -118,29 +118,30 @@ with col2:
   b = highB.loc[:,['symbol','signal','hourpivot','sdist','bb15m','bbands15m']]
   st.write(b)
 
-
+if st.button("refresh"):
+  st.rerun()
 #if st.button("update"):
 #  conn.update(worksheet="Sheet2",data=high)
 #  st.success("worksheet updated")
 
-title = st.text_input('Stocks', 'ABB')
-titles = list(title.split(","))
+# title = st.text_input('Stocks', 'ABB')
+# titles = list(title.split(","))
 
-if st.button("5mins_data"):
-  df = get5minMC(titles,"16042024")
-  st.write(df)
+# if st.button("5mins_data"):
+#   df = get5minMC(titles,"16042024")
+#   st.write(df)
   
-if st.button("day_data"):
-  df = get1dayMC(titles,"16042024")
-  st.write(df)
+# if st.button("day_data"):
+#   df = get1dayMC(titles,"16042024")
+#   st.write(df)
   
-if st.button("hourpivot"):
-  df = hourPivots(titles,"16042024")
-  st.write(df)
+# if st.button("hourpivot"):
+#   df = hourPivots(titles,"16042024")
+#   st.write(df)
   
-if st.button("15mins_data"):
-  df = get15minMC(titles,"16042024","")
-  st.write(df)
+# if st.button("15mins_data"):
+#   df = get15minMC(titles,"16042024","")
+#   st.write(df)
 
 # fno = nse.equity_market_data('Securities in F&O',symbol_list=True)
 # if st.button("all pivots"):
