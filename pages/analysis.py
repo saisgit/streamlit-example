@@ -288,3 +288,6 @@ if st.button("Get analysis"):
   if __name__ ==  '__main__':
     df = myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy)
     st.write(df)
+    conn = st.experimental_connection("gsheets", type=GSheetsConnection)
+    conn.update(worksheet="Sheet2",data=df)
+    st.success("worksheet updated")
