@@ -34,7 +34,15 @@ st.markdown(f"""
     </style>""",
     unsafe_allow_html=True,
 )
-
+st.components.v1.html(
+    f"""
+    <script>
+        var elems = window.parent.document.querySelectorAll('div[class*="stTextInput"] p');
+        var elem = Array.from(elems).find(x => x.innerText == '{label}');
+        elem.style.fontSize = '9px'; // the fontsize you want to set it to
+    </script>
+    """
+)
 class NSE():
   pre_market_categories = ['NIFTY 50','Nifty Bank','Emerge','Securities in F&O','Others','All']
   equity_market_categories = []
