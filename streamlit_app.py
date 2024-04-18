@@ -107,6 +107,7 @@ fno = nse.equity_market_data('Securities in F&O',symbol_list=True)
 if st.button("all pivots"):
   if __name__ ==  '__main__':
       start = time.time()
+      end = time.time()
       st.write("Time Taken:{}".format(end - start))
       ipsplits =4
       allsplits3 = np.array_split(fno, ipsplits)
