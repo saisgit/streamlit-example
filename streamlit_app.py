@@ -9,7 +9,6 @@ st.set_page_config(
   initial_sidebar_state='collapsed',
   layout="wide"
 )
-st.title("Home")
 #st.sidebar.success("Select pages")
 padding_top = 0
 st.markdown(f"""
@@ -23,7 +22,6 @@ st.markdown(f"""
 """
 # Welcome to Sai Stocks!
 """
-
 class NSE():
   pre_market_categories = ['NIFTY 50','Nifty Bank','Emerge','Securities in F&O','Others','All']
   equity_market_categories = []
