@@ -42,7 +42,7 @@ high = high.rename(columns={"totalTradedVolume": "volume",'lastPrice':'Close'})
 high = round(high,2)
 #st.write(high)
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
-data = conn.read(worksheet="Sheet2")
+data = conn.read(worksheet="Sheet2",ttl="0")
 st.dataframe(data)
 if st.button("update"):
   conn.update(worksheet="Sheet2",data=high)
