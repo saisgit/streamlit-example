@@ -55,12 +55,7 @@ class NSE():
     else:
       return df
       
-def add(ss):
-  st.write(ss)
-  
-if st.button('add'):
-    result = add("hello")
-    st.write('result: %s' % result)
+
 nse = NSE()
 high = nse.equity_market_data("Securities in F&O")[['open','dayHigh','dayLow','lastPrice','totalTradedVolume','previousClose']].reset_index()
 high = high.rename(columns={"totalTradedVolume": "volume",'lastPrice':'Close'})
@@ -91,10 +86,9 @@ with col2:
   st.header("buy")
   data = conn.read(worksheet="Sheet2",usecols=list(range(7)),ttl="0").dropna(how="all")
   df = pd.DataFrame(data)
-  df = df.reset_index(drop=True)
+  s
   df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
-  st.write(df2.to_html(), unsafe_allow_html=True)
-  #st.table(df2)
+  st.table(df2)
 #data = conn.read(worksheet="Sheet2",ttl="0")
 
 if st.button("update"):
