@@ -281,9 +281,9 @@ def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy,fnostocks):
         print("Time Taken:{}".format(end - start))
     return fulldf
 
-current_day_dmy = st.text_input('current_day_dmy', 'ddmmyyyy')
-previous_day_dmy = st.text_input('previous_day_dmy', 'ddmmyyyy')
-dby_day_dmy = st.text_input('dby_day_dmy', 'ddmmyyyy')
+current_day_dmy = st.text_input('current_day_dmy', '19042024')
+previous_day_dmy = st.text_input('previous_day_dmy', '18042024')
+dby_day_dmy = st.text_input('dby_day_dmy', '16042024')
 fnostocks = st.radio(
   "Choose n50 or fno",
   ["NIFTY 50", "Securities in F&O"],
