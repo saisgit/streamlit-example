@@ -90,7 +90,7 @@ col1, col2 = st.columns(2)
 #   df = pd.DataFrame(data).head(10)
 #   df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
 #   st.table(df2)
-data = conn.read(worksheet="Sheet2",ttl="0")
+data = conn.read(worksheet="Sheet2",usecols=list(range(22)),ttl="0").dropna(how="all")
 st.write(data)
 #if st.button("update"):
 #  conn.update(worksheet="Sheet2",data=high)
