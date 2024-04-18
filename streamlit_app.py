@@ -18,6 +18,8 @@ st.markdown(f"""
         }}
      div.stButton > button:first-child {{
         background-color: #578a00;
+        padding:1px;
+        font-size:4px;
         color:#ffffff;
     }}
     div.stButton > button:hover {{
