@@ -95,8 +95,8 @@ with col2:
 #  st.success("worksheet updated")
 
 title = st.text_input('Stocks', 'ABB')
-
+titles = list(title.split(","))
 if st.button("hourpivot"):
-  df = hourPivots([title],"16042024")
+  df = hourPivots(titles,"16042024")
   st.write(df)
   
