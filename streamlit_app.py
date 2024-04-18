@@ -15,6 +15,9 @@ st.markdown(f"""
     <style>
          .main .block-container{{
             padding-top: {padding_top}rem;
+        padding-right: {padding}rem;
+        padding-left: {padding}rem;
+        padding-bottom: {padding}rem;
         }}
      div.stButton > button:first-child {{
         background-color: #578a00;
