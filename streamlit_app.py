@@ -4,7 +4,6 @@ import pandas as pd
 import streamlit as st
 import requests
 from streamlit_gsheets import GSheetsConnection
-from st_pages import Page, show_pages
 st.set_page_config(
   page_title="Multipage App",
   page_icon="*"
