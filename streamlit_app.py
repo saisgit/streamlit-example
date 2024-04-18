@@ -67,13 +67,15 @@ conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
 col1, col2 = st.columns(2)
 with col1:
-   st.header("sell")
-   data = conn.read(worksheet="Sheet2",ttl="0")
+  st.header("sell")
+  data = conn.read(worksheet="Sheet2",ttl="0")
+  st.dataframe(data)
 with col2:
-   st.header("buy")
-   data = conn.read(worksheet="Sheet2",ttl="0")
+  st.header("buy")
+  data = conn.read(worksheet="Sheet2",ttl="0")
+  st.dataframe(data)
 #data = conn.read(worksheet="Sheet2",ttl="0")
-st.dataframe(data)
+
 if st.button("update"):
   conn.update(worksheet="Sheet2",data=high)
   st.success("worksheet updated")
