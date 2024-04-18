@@ -45,5 +45,5 @@ if st.button('add'):
 
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 #data = conn.read(spreadsheet=url, usecols=[0, 1])
-data = conn.read(worksheet="stock")
+data = conn.read(worksheet="719797934")
 st.dataframe(data)
