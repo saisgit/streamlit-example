@@ -78,6 +78,7 @@ styles = [
 data = conn.read(worksheet="Sheet2",usecols=list(range(35)),ttl="0").dropna(how="all")
 bbsqueeze = pd.DataFrame(data)
 high = high.set_index('symbol').join(bbsqueeze.set_index('symbol'), on='symbol')
+high.reset_index(inplace=True)
 high['bb15m'] = np.where(((high.Close.astype(float) >= high.BBU_50_15m.astype(float))), "u15",np.where(((high.Close.astype(float) <= high.BBL_50_15m.astype(float))), "lo15",""))
 conditions = [
 		(high.open.astype(float) <= high.pp_hour.astype(float)) & (high.Close.astype(float) > high.pp_hour.astype(float)),
