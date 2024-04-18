@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import requests
+from streamlit_gsheets import GSheetsConnection
 
 """
 # Welcome to Sai Stocks!
@@ -35,8 +36,13 @@ def add(ss):
 if st.button('add'):
     result = add("hello")
     st.write('result: %s' % result)
-nse = NSE()
-high = nse.equity_market_data("Securities in F&O")[['open','dayHigh','dayLow','lastPrice','totalTradedVolume','previousClose']].reset_index()
-high = high.rename(columns={"totalTradedVolume": "volume",'lastPrice':'Close'})
-high = round(high,2)
-st.write(high)
+#nse = NSE()
+#high = nse.equity_market_data("Securities in F&O")[['open','dayHigh','dayLow','lastPrice','totalTradedVolume','previousClose']].reset_index()
+#high = high.rename(columns={"totalTradedVolume": "volume",'lastPrice':'Close'})
+#high = round(high,2)
+#st.write(high)
+url = "https://docs.google.com/spreadsheets/d/1SiQdLaes0oCsYACgYRxdwJ9x0SSDgzW1bQAu5hGIBjw/edit?usp=drivesdk"
+
+conn = st.experimental_connection("gsheets", type=GSheetsConnection)
+data = conn.read(spreadsheet=url, usecols=[0, 1])
+st.dataframe(data)
