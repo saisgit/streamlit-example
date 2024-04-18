@@ -91,7 +91,7 @@ col1, col2 = st.columns(2)
 #   df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
 #   st.table(df2)
 data = conn.read(worksheet="Sheet2",ttl="0")
-
+st.write(data)
 #if st.button("update"):
 #  conn.update(worksheet="Sheet2",data=high)
 #  st.success("worksheet updated")
