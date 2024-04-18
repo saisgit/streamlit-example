@@ -297,3 +297,9 @@ if st.button("Get analysis"):
     conn = st.experimental_connection("gsheets", type=GSheetsConnection)
     conn.update(worksheet="Sheet2",data=df)
     st.success("worksheet updated")
+    
+if st.button("Read Data"):
+  conn = st.experimental_connection("gsheets", type=GSheetsConnection)
+  data = conn.read(worksheet="Sheet2",usecols=list(range(35)),ttl="0").dropna(how="all")
+  st.write(data)
+  
