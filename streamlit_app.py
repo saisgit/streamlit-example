@@ -91,9 +91,10 @@ with col2:
   st.header("buy")
   data = conn.read(worksheet="Sheet2",usecols=list(range(7)),ttl="0").dropna(how="all")
   df = pd.DataFrame(data)
-  df3 = df.set_axis(range(len(df)))
-  df2=df3.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
-  st.table(df2)
+  df = df.reset_index(drop=True)
+  df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
+  st.write(df2.to_html(), unsafe_allow_html=True)
+  #st.table(df2)
 #data = conn.read(worksheet="Sheet2",ttl="0")
 
 if st.button("update"):
