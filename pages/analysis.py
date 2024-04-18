@@ -120,7 +120,7 @@ def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy):
     full.reset_index(inplace=True)
     full = full.set_index('symbol').join(dbdy.set_index('dbysymbol'), on='symbol')
     full.reset_index(inplace=True)
-    volt = get_vol(previous_day_dmy)
+    volt = nse.get_vol(previous_day_dmy)
     full = full.set_index('symbol').join(volt.set_index('symbol'), on='symbol')
     full.reset_index(inplace=True)
     full['prevdata'] = np.where((full.dayHigh.astype(float) >  full.Yesthigh_price.astype(float)), "brkPrevHigh",np.where((full.dayLow.astype(float) <  full.Yestlow_price.astype(float)), "brkPrevlow","")) 
