@@ -69,10 +69,10 @@ high = round(high,2)
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 # style
 th_props = [
-  ('font-size', '8px')
+  ('font-size', '10px')
   ]                             
 td_props = [
-  ('font-size', '10px')
+  ('font-size', '8px')
   ]                              
 styles = [
   dict(selector="th", props=th_props),
@@ -89,7 +89,9 @@ with col1:
 with col2:
   st.header("buy")
   data = conn.read(worksheet="Sheet2",ttl="0")
-  st.dataframe(data)
+  outputdframe = pd.DataFrame(data)
+  df2=outputdframe.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
+  st.table(df2)
 #data = conn.read(worksheet="Sheet2",ttl="0")
 
 if st.button("update"):
