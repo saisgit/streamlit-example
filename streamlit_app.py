@@ -19,9 +19,7 @@ st.markdown(f"""
     </style>""",
     unsafe_allow_html=True,
 )
-"""
-# Welcome to Sai Stocks!
-"""
+
 class NSE():
   pre_market_categories = ['NIFTY 50','Nifty Bank','Emerge','Securities in F&O','Others','All']
   equity_market_categories = []
