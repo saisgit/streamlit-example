@@ -4,3 +4,5 @@ streamlit
 requests
 st-gsheets-connection
 pandasql
+yfinance
+pandas_ta
