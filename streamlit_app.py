@@ -4,19 +4,14 @@ import pandas as pd
 import streamlit as st
 import requests
 from streamlit_gsheets import GSheetsConnection
+from st_pages import Page, show_pages
 st.set_page_config(
   page_title="Multipage App",
   page_icon="*"
 )
 st.title("Home")
 #st.sidebar.success("Select pages")
-st.markdown("""
-    <style>
-        section[data-testid="stSidebar"][aria-expanded="true"]{
-            display: none;
-        }
-    </style>
-    """, unsafe_allow_html=True)
+st.set_page_config('Hello Forum', initial_sidebar_state='collapsed')
 """
 # Welcome to Sai Stocks!
 """
