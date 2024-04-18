@@ -4,16 +4,17 @@ import pandas as pd
 import streamlit as st
 import requests
 from streamlit_gsheets import GSheetsConnection
-
-"""
-# Welcome to Sai Stocks!
-"""
 st.set_page_config(
   page_title="Multipage App",
   page_icon="*"
 )
 st.title("Home")
 st.sidebar.success("Select pages")
+
+"""
+# Welcome to Sai Stocks!
+"""
+
 class NSE():
   pre_market_categories = ['NIFTY 50','Nifty Bank','Emerge','Securities in F&O','Others','All']
   equity_market_categories = []
