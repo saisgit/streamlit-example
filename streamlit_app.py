@@ -10,7 +10,7 @@ st.set_page_config(
   layout="wide"
 )
 #st.sidebar.success("Select pages")
-padding_top = 1
+padding_top = 2
 st.markdown(f"""
     <style>
          .main .block-container{{
