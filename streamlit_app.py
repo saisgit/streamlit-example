@@ -75,23 +75,49 @@ styles = [
   dict(selector="th", props=th_props),
   dict(selector="td", props=td_props)
   ]
-
+data = conn.read(worksheet="Sheet2",usecols=list(range(35)),ttl="0").dropna(how="all")
+bbsqueeze = pd.DataFrame(data)
+high = high.set_index('symbol').join(bbsqueeze.set_index('symbol'), on='symbol')
+high['bb15m'] = np.where(((high.Close.astype(float) >= high.BBU_50_15m.astype(float))), "u15",np.where(((high.Close.astype(float) <= high.BBL_50_15m.astype(float))), "lo15",""))
+conditions = [
+		(high.open.astype(float) <= high.pp_hour.astype(float)) & (high.Close.astype(float) > high.pp_hour.astype(float)),
+		(high.open.astype(float) <= high.r1_hour.astype(float)) & (high.Close.astype(float) > high.r1_hour.astype(float)),
+		(high.Close.astype(float) >= high.pp_hour.astype(float)) & (high.Close.astype(float) < high.r1_hour.astype(float)),
+		(high.Close.astype(float) >= high.r1_hour.astype(float)) & (high.Close.astype(float) < high.r2_hour.astype(float)),
+		(high.Close.astype(float) >= high.r2_hour.astype(float)),
+		(high.open.astype(float) >= high.pp_hour.astype(float)) & (high.Close.astype(float) < high.pp_hour.astype(float)),
+		(high.Close.astype(float) <= high.pp_hour.astype(float)) & (high.Close.astype(float) > high.s1_hour.astype(float)),
+		(high.open.astype(float) >= high.s1_hour.astype(float)) & (high.Close.astype(float) < high.s1_hour.astype(float)),
+		(high.Close.astype(float) <= high.s1_hour.astype(float)) & (high.Close.astype(float) > high.s2_hour.astype(float)),
+		(high.Close.astype(float) <= high.s2_hour.astype(float))
+		]
+choices = ['crsPP','crsR1','pp-R1', 'R1-R2', '>R2','crsblwPP','pp-S1','crsS1','S1-S2','<S2']
+high['hourPvt'] = np.select(conditions, choices, default='')
+high = high[high["sign"].isin(["P1","P2"])]
+#st.write(data)
+high['signal'] = np.where(((high.hourPvt.isin(["pp-R1","crsPP","crsR1",])) & ((high.Close.astype(float) >= high.BBU_5min.astype(float)))), "BUY",np.where(((high.hourPvt.isin(['crsblwPP','pp-S1','crsS1'])) & (high.Close.astype(float) <= high.BBL_5min.astype(float))), "SELL",""))
+highB = high[(high["signal"].str.contains("BUY", na=False))]
+highS = high[(high["signal"].str.contains("SELL", na=False))]
 col1, col2 = st.columns(2)
-# with col1:
-#   st.header("sell")
-#   data = conn.read(worksheet="Sheet2",usecols=list(range(7)),ttl="0").dropna(how="all")
-#   df = pd.DataFrame(data).head(10)
-#   df = df.reset_index(drop=True)
-#   df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
-#   st.table(df2)
-# with col2:
-#   st.header("buy")
-#   data = conn.read(worksheet="Sheet2",usecols=list(range(7)),ttl="0").dropna(how="all")
-#   df = pd.DataFrame(data).head(10)
-#   df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
-#   st.table(df2)
-data = conn.read(worksheet="Sheet2",usecols=list(range(22)),ttl="0").dropna(how="all")
-st.write(data)
+with col1:
+  st.header("sell")
+  #data = conn.read(worksheet="Sheet2",usecols=list(range(7)),ttl="0").dropna(how="all")
+  #df = pd.DataFrame(data).head(10)
+  #df = df.reset_index(drop=True)
+  #df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
+  #st.table(df2)
+  s = highS.loc[:,['symbol','signal','hourPvt','sdist']]
+  st.write(s)
+with col2:
+  # st.header("buy")
+  # data = conn.read(worksheet="Sheet2",usecols=list(range(7)),ttl="0").dropna(how="all")
+  # df = pd.DataFrame(data).head(10)
+  # df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
+  # st.table(df2)
+  b = highB.loc[:,['symbol','signal','hourPvt','sdist']]
+  st.write(b)
+
+
 #if st.button("update"):
 #  conn.update(worksheet="Sheet2",data=high)
 #  st.success("worksheet updated")
@@ -115,22 +141,22 @@ if st.button("15mins_data"):
   df = get15minMC(titles,"16042024","")
   st.write(df)
 
-fno = nse.equity_market_data('Securities in F&O',symbol_list=True)
-if st.button("all pivots"):
-  if __name__ ==  '__main__':
-      start = time.time()
-      end = time.time()
-      st.write("Time Taken:{}".format(end - start))
-      ipsplits =4
-      allsplits3 = np.array_split(fno, ipsplits)
-      tasks3 = map(lambda x:(allsplits3[x],"16042024"),range(0,ipsplits)) # current_day_dmy change to previousday when running for before day
-      with Pool(ipsplits) as executor:
-        results = executor.starmap(hourPivots,iterable=tasks3)
-      pivotDF = pd.concat(results)
-      #df = hourPivots(fno,"16042024")
-      end = time.time()
-      st.write(pivotDF)
-      st.write("Time Taken:{}".format(end - start))
+# fno = nse.equity_market_data('Securities in F&O',symbol_list=True)
+# if st.button("all pivots"):
+#   if __name__ ==  '__main__':
+#       start = time.time()
+#       end = time.time()
+#       st.write("Time Taken:{}".format(end - start))
+#       ipsplits =4
+#       allsplits3 = np.array_split(fno, ipsplits)
+#       tasks3 = map(lambda x:(allsplits3[x],"16042024"),range(0,ipsplits)) # current_day_dmy change to previousday when running for before day
+#       with Pool(ipsplits) as executor:
+#         results = executor.starmap(hourPivots,iterable=tasks3)
+#       pivotDF = pd.concat(results)
+#       #df = hourPivots(fno,"16042024")
+#       end = time.time()
+#       st.write(pivotDF)
+#       st.write("Time Taken:{}".format(end - start))
     
 
 #if st.button("all pivots"):
