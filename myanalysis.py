@@ -38,6 +38,44 @@ class Moneycontrol:
     df = pd.concat([dt,data['o'],data['h'],data['l'],data['c'],data['v']],axis=1).rename(columns={'o':'Open','h':'High','l':'Low','c':'Close','v':'Volume'})
     return df
 
+def get5minMC(fno,current_day_dmy):
+    mydf = pd.DataFrame()
+    for stock in fno:
+        #tday = datetime.strptime(current_day_dmy, '%d%m%Y').date() + timedelta(days=1)
+        #duration = "5m"  # Valid intervals: [1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo]
+        #nse = Moneycontrol()
+        #df = nse.hist_data(stock,current_day_dmy,'5','900')
+        tday = datetime.strptime(current_day_dmy, '%d%m%Y').date() + timedelta(days=1)
+        startDay = tday - timedelta(days=50)
+        duration = "5m"  # Valid intervals: [1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo]
+        try:
+            proxyServer = urllib.request.getproxies()['http']
+        except KeyError:
+            proxyServer = ""
+        df = yf.download(
+            tickers=stock + ".NS",  start=startDay, end=tday,
+            #period=period,
+            interval=duration,
+            proxy=proxyServer,
+            progress=False,
+            timeout=10
+        )
+        pd.set_option('display.max_columns', None)
+        df['symbol'] = stock
+        df.reset_index(inplace=True)
+        df.set_index(pd.DatetimeIndex(df["Datetime"]).tz_localize(None), inplace=True)
+        #df['adx'] = ta.adx(df['High'], df['Low'], df['Close'],length=14)['ADX_14']
+        df.ta.bbands(close='Close', length=50, std=2, append=True) #BBL_50_2  BBM_50_2  BBU_50_2
+        #print(df)
+        df['bb5mdiff'] = round(((df['BBU_50_2.0'].astype(float)-df['BBL_50_2.0'].astype(float))/df['BBU_50_2.0'].astype(float))*100,2)
+        df['BBU_5min'] = df['BBU_50_2.0'].astype(float)
+        df['BBL_5min'] = df['BBL_50_2.0'].astype(float)
+        df = df[df['Datetime'].astype(str).str.contains(str(datetime.strptime(current_day_dmy, '%d%m%Y').date().strftime("%Y-%m-%d")))]
+        df = df.tail(1)
+        mydf = pd.concat([mydf,df])
+        mydf = mydf[['symbol','bb5mdiff','BBU_5min','BBL_5min','Open','Close','High','Low']]
+        mydf.reset_index(inplace=True)
+    return round(mydf, 2)[['symbol','bb5mdiff','BBU_5min','BBL_5min','Open','Close','High','Low']]
 
 def hourPivots(fno,current_day_dmy):
     mydf = pd.DataFrame()
