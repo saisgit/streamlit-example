@@ -11,9 +11,8 @@ st.set_page_config(
 st.title("Home")
 #st.sidebar.success("Select pages")
 #st.session_state.sidebar_state = 'collapsed'
-st.initial_sidebar_state='collapsed'
+#st.initial_sidebar_state='collapsed'
 st.set_page_config(initial_sidebar_state='collapsed')
-
 """
 # Welcome to Sai Stocks!
 """
