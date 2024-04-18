@@ -10,11 +10,11 @@ st.set_page_config(
   layout="wide"
 )
 #st.sidebar.success("Select pages")
-padding_top = 2
+padding = 2
 st.markdown(f"""
     <style>
          .main .block-container{{
-            padding-top: {padding_top}rem;
+        padding-top: {padding}rem;
         padding-right: {padding}rem;
         padding-left: {padding}rem;
         padding-bottom: {padding}rem;
