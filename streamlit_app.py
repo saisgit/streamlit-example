@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 import requests
 from streamlit_gsheets import GSheetsConnection
-from myanalysis import hourPivots
+from myanalysis import hourPivots,get15minMC
 from multiprocessing import Pool
 import time
 st.set_page_config(
@@ -101,6 +101,10 @@ titles = list(title.split(","))
 
 if st.button("hourpivot"):
   df = hourPivots(titles,"16042024")
+  st.write(df)
+  
+if st.button("15mins_data"):
+  df = get15minMC(titles,"16042024","")
   st.write(df)
 
 fno = nse.equity_market_data('Securities in F&O',symbol_list=True)
