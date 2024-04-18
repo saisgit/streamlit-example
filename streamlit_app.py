@@ -15,10 +15,10 @@ st.markdown(f"""
     <style>
         .reportview-container .main .block-container{{
             padding-top: {padding_top}rem;
-        }}
-        button {
+        }},
+      button {
       height: auto;
-          font-size:5px
+      font-size:5px;
       padding-top: 10px !important;
       padding-bottom: 10px !important;
       background-color: #578a00
