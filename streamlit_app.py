@@ -5,6 +5,7 @@ import requests
 from streamlit_gsheets import GSheetsConnection
 from myanalysis import hourPivots
 from multiprocessing import Pool
+import time
 st.set_page_config(
   page_title="Multipage App",
   initial_sidebar_state='collapsed',
