@@ -99,10 +99,10 @@ def volshock(todayshock):
 
 
 
-def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy):
+def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy,fnostocks):
     nse = NSE()
     start = time.time()
-    fno = nse.equity_market_data('Securities in F&O',symbol_list=True)
+    fno = nse.equity_market_data(fnostocks,symbol_list=True) #'Securities in F&O'
     n50 = nse.equity_market_data('NIFTY 50',symbol_list=True)
     n50.remove("NIFTY 50")
     df1 = nse.equity_market_data("Securities in F&O")[['open','dayHigh','dayLow','lastPrice','totalTradedVolume','previousClose']].reset_index()
@@ -286,7 +286,13 @@ previous_day_dmy = st.text_input('previous_day_dmy', 'ddmmyyyy')
 dby_day_dmy = st.text_input('dby_day_dmy', 'ddmmyyyy')
 if st.button("Get analysis"):
   if __name__ ==  '__main__':
-    df = myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy)
+    fnostocks = st.radio(
+    "Choose n50 or fno",
+    ["NIFTY 50", "Securities in F&O"],
+    index=None,
+    )
+    st.write("You selected:", fnostocks)
+    df = myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy,fnostocks)
     st.write(df)
     conn = st.experimental_connection("gsheets", type=GSheetsConnection)
     conn.update(worksheet="Sheet2",data=df)
