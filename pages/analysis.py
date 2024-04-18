@@ -101,6 +101,7 @@ def volshock(todayshock):
 
 def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy):
     nse = NSE()
+    start = time.time()
     #fno = nse.equity_market_data('Securities in F&O',symbol_list=True)
     fno = n50 = nse.equity_market_data('NIFTY 50',symbol_list=True)
     n50.remove("NIFTY 50")
