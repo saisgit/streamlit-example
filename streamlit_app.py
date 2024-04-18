@@ -9,7 +9,7 @@ st.set_page_config(
   page_icon="*"
 )
 st.title("Home")
-st.sidebar.success("Select pages")
+#st.sidebar.success("Select pages")
 
 """
 # Welcome to Sai Stocks!
