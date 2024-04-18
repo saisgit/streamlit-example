@@ -67,12 +67,26 @@ high = high.rename(columns={"totalTradedVolume": "volume",'lastPrice':'Close'})
 high = round(high,2)
 #st.write(high)
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
+# style
+th_props = [
+  ('font-size', '8px')
+  ]                             
+td_props = [
+  ('font-size', '10px')
+  ]                              
+styles = [
+  dict(selector="th", props=th_props),
+  dict(selector="td", props=td_props)
+  ]
 
 col1, col2 = st.columns(2)
 with col1:
   st.header("sell")
   data = conn.read(worksheet="Sheet2",ttl="0")
-  st.dataframe(data)
+  outputdframe = st.dataframe(data)
+  # table
+  df2=outputdframe.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
+  st.table(df2)
 with col2:
   st.header("buy")
   data = conn.read(worksheet="Sheet2",ttl="0")
