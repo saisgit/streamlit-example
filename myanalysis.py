@@ -153,3 +153,63 @@ def get15minMC(fno,current_day_dmy,flag):
         mydf = round(mydf, 2)
         mydf.reset_index(inplace=True)
     return mydf.loc[:, ['symbol','bbands15m','BBU_50_15m','BBL_50_15m','SMA_50_15m','vwap','EMA50_15m','ema50vwap','ev']]
+
+def get1hourMC(fno,current_day_dmy):
+    mydf = pd.DataFrame()
+    for stock in fno:
+        tday = datetime.strptime(current_day_dmy, '%d%m%Y').date() + timedelta(days=1)
+        nse = Moneycontrol()
+        df = nse.hist_data(stock,current_day_dmy,'60','3000')
+        pd.set_option('display.max_columns', None)
+        df['symbol'] = stock
+        df.reset_index(inplace=True)
+        df.set_index(pd.DatetimeIndex(df["Datetime"]).tz_localize(None), inplace=True)
+        #df['d_adx'] = ta.adx(df['High'], df['Low'], df['Close'],length=14)['ADX_14']
+        df.ta.ema(length=20, append=True)
+        df.ta.sma(length=20, append=True)
+        df.ta.bbands(close='Close', length=50, std=2, append=True) #BBL_50_2  BBM_50_2  BBU_50_2
+        df.ta.supertrend(period=7, multiplier=3, append=True)
+        df = df.rename(columns={"SUPERT_7_3.0":"hour_st"})
+        df['bbdiff1hr'] = round(((df['BBU_50_2.0'].astype(float)-df['BBL_50_2.0'].astype(float))/df['BBU_50_2.0'].astype(float))*100,2)
+        df['BBU_1hr'] = df['BBU_50_2.0'].astype(float)
+        df['BBL_1hr'] = df['BBL_50_2.0'].astype(float)
+        df['SMA_50'] = df['BBM_50_2.0'].astype(float)
+        df['SMA_20_1hr'] = df['SMA_20'].astype(float)
+        ##df['cross'] = np.where((df.Close.astype(float) >= df['BBU_50_2.0'].astype(float)) & (df.Close_1day_ago.astype(float) <= df['BBU_50_2_1day_ago'].astype(float)), "uband","na")
+        voldf = df[(df['Datetime'].dt.date >= datetime.strptime(current_day_dmy, '%d%m%Y').date() - timedelta(days=15)) & (df['Datetime'].dt.date <= datetime.strptime(current_day_dmy, '%d%m%Y').date())]
+        voldf['cross'] = np.where((voldf.Close.astype(float) <= voldf['BBL_50_2.0'].astype(float)), "lband",np.where((voldf.Close.astype(float) >= voldf['BBU_50_2.0'].astype(float)), "uband","na"))
+        allvols = list(set(voldf['cross'].tail(14).tolist()))
+        if('uband' in allvols): 
+            df['bb_crs'] = 'ub'
+        elif 'lband' in allvols:
+            df['bb_crs'] = 'lb'
+        else:
+            df['bb_crs'] = ''
+        df = df[df['Datetime'].astype(str).str.contains(str(datetime.strptime(current_day_dmy, '%d%m%Y').date().strftime("%Y-%m-%d")))]
+        df = df.tail(1)
+        mydf = pd.concat([mydf,df])
+        mydf = mydf.loc[:,['symbol','bbdiff1hr','bb_crs','BBU_1hr','BBL_1hr','hour_st','SMA_50','EMA_20','SMA_20_1hr']]
+        mydf = round(mydf, 2)
+        mydf.reset_index(inplace=True)
+    return mydf.loc[:,['symbol','bbdiff1hr','bb_crs','BBU_1hr','BBL_1hr','hour_st','SMA_50','EMA_20','SMA_20_1hr']]
+
+# def get1hourMC(fno,current_day_dmy):
+#     df = pd.DataFrame()
+#     for i in fno:
+#         try:
+#             df1 = pd.DataFrame({'symbol': [i]})
+#             ta_stock = re.sub("[^a-zA-Z0-9 \n\.]", "_", i)
+#             ta_data = TA_Handler(symbol=ta_stock,screener="india",exchange="NSE",interval=Interval.INTERVAL_1_HOUR,).get_analysis()
+#             df1['hour_st'] = 0
+#             df1["BBL_1hr"] = ta_data.indicators['BB.lower']
+#             df1["BBU_1hr"] = ta_data.indicators['BB.upper']
+#             df1["SMA_50"] = ta_data.indicators['SMA50']
+#             df1["EMA_20"] = ta_data.indicators['EMA20']
+#             df1["SMA_20_1hr"] = ta_data.indicators['SMA20']
+#             df1['bbdiff1hr'] = round(((df1['BBU_1hr'].astype(float)-df1['BBL_1hr'].astype(float))/df1['BBU_1hr'].astype(float))*100,2)
+#             df1['bb_crs'] = ''
+#             df = pd.concat([df,df1])
+#         except:
+#             print("An exception occurred")
+#     return round(df[['symbol','bbdiff1hr','bb_crs','BBU_1hr','BBL_1hr','hour_st','SMA_50','EMA_20','SMA_20_1hr']],2)
+
