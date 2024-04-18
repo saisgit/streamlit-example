@@ -6,11 +6,11 @@ import requests
 from streamlit_gsheets import GSheetsConnection
 st.set_page_config(
   page_title="Multipage App",
-  initial_sidebar_state='collapsed'
+  initial_sidebar_state='collapsed',
+  layout="wide"
 )
 st.title("Home")
 #st.sidebar.success("Select pages")
-st.set_page_config(layout="wide")
 padding_top = 0
 st.markdown(f"""
     <style>
