@@ -13,7 +13,7 @@ st.set_page_config(
 padding_top = 0
 st.markdown(f"""
     <style>
-        .reportview-container .main .block-container{{
+        .block-container{{
             padding-top: {padding_top}rem;
         }}
      div.stButton > button:first-child {{
