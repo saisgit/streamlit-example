@@ -44,6 +44,6 @@ if st.button('add'):
 #url = "https://docs.google.com/spreadsheets/d/1SiQdLaes0oCsYACgYRxdwJ9x0SSDgzW1bQAu5hGIBjw/edit?usp=drivesdk"
 
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
-#data = conn.read(spreadsheet=url, usecols=[0, 1])
 data = conn.read(worksheet="719797934")
 st.dataframe(data)
+#data = conn.read(spreadsheet=url, usecols=[0, 1])
