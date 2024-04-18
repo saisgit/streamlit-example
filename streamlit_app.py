@@ -107,15 +107,15 @@ with col1:
   #df = df.reset_index(drop=True)
   #df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   #st.table(df2)
-  s = highS.loc[:,['symbol','signal','hourpivot','sdist']]
+  s = highS.loc[:,['symbol','signal','hourpivot','sdist','bb15m','bbands15m']]
   st.write(s)
 with col2:
-  # st.header("buy")
+  st.header("buy")
   # data = conn.read(worksheet="Sheet2",usecols=list(range(7)),ttl="0").dropna(how="all")
   # df = pd.DataFrame(data).head(10)
   # df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   # st.table(df2)
-  b = highB.loc[:,['symbol','signal','hourpivot','sdist']]
+  b = highB.loc[:,['symbol','signal','hourpivot','sdist','bb15m','bbands15m']]
   st.write(b)
 
 
