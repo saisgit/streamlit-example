@@ -8,6 +8,7 @@ import urllib
 import re
 import yfinance as yf
 import pandas_ta as ta
+from tradingview_ta import TA_Handler, Interval, Exchange
 
 def datetotimestamp(date):
     time_tuple = date.timetuple()
@@ -154,7 +155,7 @@ def get15minMC(fno,current_day_dmy,flag):
         mydf.reset_index(inplace=True)
     return mydf.loc[:, ['symbol','bbands15m','BBU_50_15m','BBL_50_15m','SMA_50_15m','vwap','EMA50_15m','ema50vwap','ev']]
 
-def get1hourMC(fno,current_day_dmy):
+def get1hourMC_bkp(fno,current_day_dmy):
     mydf = pd.DataFrame()
     for stock in fno:
         tday = datetime.strptime(current_day_dmy, '%d%m%Y').date() + timedelta(days=1)
@@ -193,23 +194,23 @@ def get1hourMC(fno,current_day_dmy):
         mydf.reset_index(inplace=True)
     return mydf.loc[:,['symbol','bbdiff1hr','bb_crs','BBU_1hr','BBL_1hr','hour_st','SMA_50','EMA_20','SMA_20_1hr']]
 
-# def get1hourMC(fno,current_day_dmy):
-#     df = pd.DataFrame()
-#     for i in fno:
-#         try:
-#             df1 = pd.DataFrame({'symbol': [i]})
-#             ta_stock = re.sub("[^a-zA-Z0-9 \n\.]", "_", i)
-#             ta_data = TA_Handler(symbol=ta_stock,screener="india",exchange="NSE",interval=Interval.INTERVAL_1_HOUR,).get_analysis()
-#             df1['hour_st'] = 0
-#             df1["BBL_1hr"] = ta_data.indicators['BB.lower']
-#             df1["BBU_1hr"] = ta_data.indicators['BB.upper']
-#             df1["SMA_50"] = ta_data.indicators['SMA50']
-#             df1["EMA_20"] = ta_data.indicators['EMA20']
-#             df1["SMA_20_1hr"] = ta_data.indicators['SMA20']
-#             df1['bbdiff1hr'] = round(((df1['BBU_1hr'].astype(float)-df1['BBL_1hr'].astype(float))/df1['BBU_1hr'].astype(float))*100,2)
-#             df1['bb_crs'] = ''
-#             df = pd.concat([df,df1])
-#         except:
-#             print("An exception occurred")
-#     return round(df[['symbol','bbdiff1hr','bb_crs','BBU_1hr','BBL_1hr','hour_st','SMA_50','EMA_20','SMA_20_1hr']],2)
+def get1hourMC(fno,current_day_dmy):
+    df = pd.DataFrame()
+    for i in fno:
+        try:
+            df1 = pd.DataFrame({'symbol': [i]})
+            ta_stock = re.sub("[^a-zA-Z0-9 \n\.]", "_", i)
+            ta_data = TA_Handler(symbol=ta_stock,screener="india",exchange="NSE",interval=Interval.INTERVAL_1_HOUR,).get_analysis()
+            df1['hour_st'] = 0
+            df1["BBL_1hr"] = ta_data.indicators['BB.lower']
+            df1["BBU_1hr"] = ta_data.indicators['BB.upper']
+            df1["SMA_50"] = ta_data.indicators['SMA50']
+            df1["EMA_20"] = ta_data.indicators['EMA20']
+            df1["SMA_20_1hr"] = ta_data.indicators['SMA20']
+            df1['bbdiff1hr'] = round(((df1['BBU_1hr'].astype(float)-df1['BBL_1hr'].astype(float))/df1['BBU_1hr'].astype(float))*100,2)
+            df1['bb_crs'] = ''
+            df = pd.concat([df,df1])
+        except:
+            print("An exception occurred")
+    return round(df[['symbol','bbdiff1hr','bb_crs','BBU_1hr','BBL_1hr','hour_st','SMA_50','EMA_20','SMA_20_1hr']],2)
 
