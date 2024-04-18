@@ -100,11 +100,19 @@ def hourPivots(fno,current_day_dmy):
         full['cpr'] = round((abs(full.tc.astype(float)-full.bc.astype(float))/full.bc.astype(float))*100,2)
         full['r1_hour'] = round((2 * full.pp_hour.astype(float)) - full.Low.astype(float),2)
         full['s1_hour'] = round((2 * full.pp_hour.astype(float)) - full.High.astype(float),2)
+        full['r2_hour'] = (full.pp_hour.astype(float)) + (full.High.astype(float) - full.Low.astype(float))
+        full['s2_hour'] = (full.pp_hour.astype(float)) - (full.High.astype(float) - full.Low.astype(float))
+        #full['r3_hour'] = (full.High.astype(float)) + (2*(full.pp_hour.astype(float) - full.Low.astype(float)))
+        full['pp_hour_prev'] = full['pp_hour'].shift(1)
+        full['r1_hour_prev'] = full['r1_hour'].shift(1)
+        full['s1_hour_prev'] = full['s1_hour'].shift(1)
+        full['r2_hour_prev'] = full['r2_hour'].shift(1)
+        full['s2_hour_prev'] = full['s2_hour'].shift(1)
         full['pr_dist_hr'] = round(((full['pp_hour'].astype(float)-full['r1_hour'].astype(float))/full['pp_hour'].astype(float))*100,2)
         full['ps_dist_hr'] = round(((full['pp_hour'].astype(float)-full['s1_hour'].astype(float))/full['pp_hour'].astype(float))*100,2)
         full = full.tail(1)
         mydf = pd.concat([mydf,full])
-    return round(mydf,2).loc[:,['symbol','pp_hour','r1_hour','s1_hour','pr_dist_hr','ps_dist_hr']]
+    return round(mydf,2).loc[:,['symbol','pp_hour','r1_hour','r2_hour','s1_hour','s2_hour','pr_dist_hr','ps_dist_hr','pp_hour_prev', 'r1_hour_prev', 's1_hour_prev', 'r2_hour_prev', 's2_hour_prev']]
 
 def get15minMC(fno,current_day_dmy,flag):
     mydf = pd.DataFrame()
