@@ -6,11 +6,10 @@ import requests
 from streamlit_gsheets import GSheetsConnection
 st.set_page_config(
   page_title="Multipage App",
-  page_icon="*"
+  initial_sidebar_state='collapsed'
 )
 st.title("Home")
 #st.sidebar.success("Select pages")
-st.set_page_config('Hello Forum', initial_sidebar_state='collapsed')
 """
 # Welcome to Sai Stocks!
 """
