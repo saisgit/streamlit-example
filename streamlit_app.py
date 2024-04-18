@@ -89,7 +89,7 @@ with col1:
 with col2:
   st.header("buy")
   data = conn.read(worksheet="Sheet2",ttl="0")
-  outputdframe = pd.DataFrame(data).reset_index().head(10)
+  outputdframe = pd.DataFrame(data).head(10)
   df2=outputdframe.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   st.table(df2)
 #data = conn.read(worksheet="Sheet2",ttl="0")
