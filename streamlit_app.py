@@ -29,7 +29,8 @@ st.markdown(f"""
     div.stButton > button:hover {{
         background-color: #00128a;
         color:#ffffff;
-        }}
+        }};
+    table {{background-color: #f0f0f0;font-size:5px;}}
     </style>""",
     unsafe_allow_html=True,
 )
