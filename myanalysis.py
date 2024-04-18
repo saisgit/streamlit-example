@@ -6,6 +6,8 @@ import requests
 import numpy as np
 import urllib
 import re
+import yfinance as yf
+import pandas_ta as ta
 
 def datetotimestamp(date):
     time_tuple = date.timetuple()
@@ -64,4 +66,52 @@ def hourPivots(fno,current_day_dmy):
         full = full.tail(1)
         mydf = pd.concat([mydf,full])
     return round(mydf,2).loc[:,['symbol','pp_hour','r1_hour','s1_hour','pr_dist_hr','ps_dist_hr']]
-    
+
+def get15minMC(fno,current_day_dmy,flag):
+    mydf = pd.DataFrame()
+    flag = ""
+    for stock in fno:
+        tday = datetime.strptime(current_day_dmy, '%d%m%Y').date() + timedelta(days=1)
+        startDay = tday - timedelta(days=50)
+        if flag == 'Y':
+            nse1 = Moneycontrol()
+            #df = nse1.hist_data_sector(stock,current_day_dmy,'15m')
+            df = nse1.hist_data(stock,current_day_dmy,'15','3000')
+        else:
+            duration = '15m'  # Valid intervals: [1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo]
+            try:
+                proxyServer = urllib.request.getproxies()['http']
+            except KeyError:
+                proxyServer = ""
+            df = yf.download(
+                tickers=stock+".NS",  start=startDay, end=tday,
+                #period=period,
+                interval=duration,
+                proxy=proxyServer,
+                progress=False,
+                timeout=10
+            )
+        pd.set_option('display.max_columns', None)
+        df['symbol'] = stock
+        df.reset_index(inplace=True)
+        df.set_index(pd.DatetimeIndex(df["Datetime"]).tz_localize(None), inplace=True)
+        df.ta.bbands(close='Close', length=50, std=2, append=True)
+        #print(df)
+        df.ta.vwap(append=True)
+        df.ta.ema(length=50, append=True)
+        df['bbands15m'] = round(((df['BBU_50_2.0'].astype(float)-df['BBL_50_2.0'].astype(float))/df['BBU_50_2.0'].astype(float))*100,2)
+        df['BBU_50_15m'] = df['BBU_50_2.0'].astype(float)
+        df['BBL_50_15m'] = df['BBL_50_2.0'].astype(float)
+        df['SMA_50_15m'] = df['BBM_50_2.0'].astype(float)
+        df['vwap'] = df['VWAP_D']
+        df['EMA50_15m'] = df['EMA_50']
+        df['ema50vwap'] = round((abs(df['EMA50_15m'].astype(float)-df['vwap'].astype(float))/df['EMA50_15m'].astype(float))*100,2)
+        df['ev'] = np.where(((df.vwap.astype(float) >= df.EMA50_15m.astype(float))), "up","down")
+        df = df[df['Datetime'].astype(str).str.contains(str(datetime.strptime(current_day_dmy, '%d%m%Y').date().strftime("%Y-%m-%d")))]
+        #print(df)
+        df = df.tail(1)
+        mydf = pd.concat([mydf,df])
+        mydf = mydf[['symbol','bbands15m','BBU_50_15m','BBL_50_15m','SMA_50_15m','vwap','EMA50_15m','ema50vwap','ev']]
+        mydf = round(mydf, 2)
+        mydf.reset_index(inplace=True)
+    return mydf.loc[:, ['symbol','bbands15m','BBU_50_15m','BBL_50_15m','SMA_50_15m','vwap','EMA50_15m','ema50vwap','ev']]
