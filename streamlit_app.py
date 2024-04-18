@@ -90,11 +90,13 @@ with col2:
   st.table(df2)
 #data = conn.read(worksheet="Sheet2",ttl="0")
 
-if st.button("update"):
-  conn.update(worksheet="Sheet2",data=high)
-  st.success("worksheet updated")
+#if st.button("update"):
+#  conn.update(worksheet="Sheet2",data=high)
+#  st.success("worksheet updated")
+
+title = st.text_input('Stocks', 'ABB')
 
 if st.button("hourpivot"):
-  df = hourPivots(["ABB"],"16042024")
+  df = hourPivots([title],"16042024")
   st.write(df)
   
