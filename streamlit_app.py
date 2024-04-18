@@ -41,8 +41,8 @@ if st.button('add'):
 #high = high.rename(columns={"totalTradedVolume": "volume",'lastPrice':'Close'})
 #high = round(high,2)
 #st.write(high)
-url = "https://docs.google.com/spreadsheets/d/1uHV7gYSqshSfJL6nh7eRyoFa5F2qL9iGshVEe7RQ8gw/edit#gid=42234889"
+url = "https://docs.google.com/spreadsheets/d/1uHV7gYSqshSfJL6nh7eRyoFa5F2qL9iGshVEe7RQ8gw/edit?usp=sharing"
 conn = st.connection("gsheets", type=GSheetsConnection)
-data = conn.read(spreadsheet=url, usecols=[0, 1])
+data = conn.read(spreadsheet=url, usecols=[0, 1],worksheet="Sheet2")
 #data = conn.read(worksheet="Sheet2")
 st.dataframe(data)
