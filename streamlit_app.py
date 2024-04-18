@@ -1,9 +1,9 @@
-import altair as alt
 import numpy as np
 import pandas as pd
 import streamlit as st
 import requests
 from streamlit_gsheets import GSheetsConnection
+from myanalysis import hourPivots
 st.set_page_config(
   page_title="Multipage App",
   initial_sidebar_state='collapsed',
@@ -85,7 +85,7 @@ with col1:
 with col2:
   st.header("buy")
   data = conn.read(worksheet="Sheet2",usecols=list(range(7)),ttl="0").dropna(how="all")
-  df = pd.DataFrame(data)
+  df = pd.DataFrame(data).head(10)
   df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   st.table(df2)
 #data = conn.read(worksheet="Sheet2",ttl="0")
@@ -93,3 +93,8 @@ with col2:
 if st.button("update"):
   conn.update(worksheet="Sheet2",data=high)
   st.success("worksheet updated")
+
+if st.button("hourpivot"):
+  df = hourPivots(["ABB"],"16042024")
+  st.write(df)
+  
