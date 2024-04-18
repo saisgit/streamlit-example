@@ -10,10 +10,10 @@ st.set_page_config(
   layout="wide"
 )
 #st.sidebar.success("Select pages")
-padding_top = 0
+padding_top = 1
 st.markdown(f"""
     <style>
-        .block-container{{
+         .main .block-container{{
             padding-top: {padding_top}rem;
         }}
      div.stButton > button:first-child {{
