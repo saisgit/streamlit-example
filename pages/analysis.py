@@ -284,14 +284,14 @@ def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy,fnostocks):
 current_day_dmy = st.text_input('current_day_dmy', 'ddmmyyyy')
 previous_day_dmy = st.text_input('previous_day_dmy', 'ddmmyyyy')
 dby_day_dmy = st.text_input('dby_day_dmy', 'ddmmyyyy')
+fnostocks = st.radio(
+  "Choose n50 or fno",
+  ["NIFTY 50", "Securities in F&O"],
+  index=None,
+  )
+st.write("You selected:", fnostocks)
 if st.button("Get analysis"):
   if __name__ ==  '__main__':
-    fnostocks = st.radio(
-    "Choose n50 or fno",
-    ["NIFTY 50", "Securities in F&O"],
-    index=None,
-    )
-    st.write("You selected:", fnostocks)
     df = myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy,fnostocks)
     st.write(df)
     conn = st.experimental_connection("gsheets", type=GSheetsConnection)
