@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 import requests
 from streamlit_gsheets import GSheetsConnection
-from myanalysis import hourPivots,get15minMC,get5minMC
+from myanalysis import hourPivots,get15minMC,get5minMC,get1hourMC
 from multiprocessing import Pool
 import time
 st.set_page_config(
@@ -101,6 +101,10 @@ titles = list(title.split(","))
 
 if st.button("5mins_data"):
   df = get5minMC(titles,"16042024")
+  st.write(df)
+  
+if st.button("hour_data"):
+  df = get1hourMC(titles,"16042024")
   st.write(df)
   
 if st.button("hourpivot"):
