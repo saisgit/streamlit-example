@@ -83,7 +83,7 @@ col1, col2 = st.columns(2)
 with col1:
   st.header("sell")
   data = conn.read(worksheet="Sheet2",ttl="0")
-  outputdframe = st.dataframe(data)
+  outputdframe = pd.DataFrame(data)
   df2=outputdframe.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   st.table(df2)
 with col2:
