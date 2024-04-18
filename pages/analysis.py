@@ -120,9 +120,9 @@ def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy):
     full.reset_index(inplace=True)
     full = full.set_index('symbol').join(dbdy.set_index('dbysymbol'), on='symbol')
     full.reset_index(inplace=True)
-    volt = nse.get_vol(previous_day_dmy)
-    full = full.set_index('symbol').join(volt.set_index('symbol'), on='symbol')
-    full.reset_index(inplace=True)
+    #volt = nse.get_vol(previous_day_dmy)
+    #full = full.set_index('symbol').join(volt.set_index('symbol'), on='symbol')
+    #full.reset_index(inplace=True)
     full['prevdata'] = np.where((full.dayHigh.astype(float) >  full.Yesthigh_price.astype(float)), "brkPrevHigh",np.where((full.dayLow.astype(float) <  full.Yestlow_price.astype(float)), "brkPrevlow","")) 
     full['pp'] = (full.Yesthigh_price.astype(float) + full.Yestlow_price.astype(float) + full.Yestclose_price.astype(float))/3
     full['yest_pp'] = (full.dbyhigh_price.astype(float) + full.dbylow_price.astype(float) + full.Yestprev_close.astype(float))/3
