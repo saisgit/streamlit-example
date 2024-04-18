@@ -96,7 +96,13 @@ with col2:
 
 title = st.text_input('Stocks', 'ABB')
 titles = list(title.split(","))
+
 if st.button("hourpivot"):
   df = hourPivots(titles,"16042024")
   st.write(df)
-  
+
+fno = nse.equity_market_data('Securities in F&O',symbol_list=True)
+if st.button("all pivots"):
+  df = hourPivots(fno,"16042024")
+  st.write(df)
+
