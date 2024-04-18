@@ -102,6 +102,16 @@ if st.button("hourpivot"):
   st.write(df)
 
 fno = nse.equity_market_data('Securities in F&O',symbol_list=True)
+if __name__ ==  '__main__':
+    ipsplits =4
+    allsplits3 = np.array_split(fno, ipsplits)
+    tasks3 = map(lambda x:(allsplits3[x],"16042024"),range(0,ipsplits)) # current_day_dmy change to previousday when running for before day
+    with Pool(ipsplits) as executor:
+      results = executor.starmap(hourPivots,iterable=tasks3)
+    pivotDF = pd.concat(results)
+    #df = hourPivots(fno,"16042024")
+    st.write(pivotDF)
+
 if st.button("all pivots"):
   df = hourPivots(fno,"16042024")
   st.write(df)
