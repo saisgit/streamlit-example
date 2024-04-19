@@ -198,19 +198,21 @@ with col1:
   #df = df.reset_index(drop=True)
   #df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   #st.table(df2)
+  s = st.dataframe(filter_nifty(highS))
   s = highS.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
-  st.dataframe(filter_nifty(s))
-  #st.write(s)
+  
+  st.write(s)
 with col2:
   st.header("buy")
   # data = conn.read(worksheet="Sheet2",usecols=list(range(7)),ttl="0").dropna(how="all")
   # df = pd.DataFrame(data).head(10)
   # df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   # st.table(df2)
+  b = st.dataframe(filter_nifty(highB))
   b = highB.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
   #st.dataframe(filter_dataframe(s))
-  st.dataframe(filter_nifty(b))
-  #st.write(b)
+  
+  st.write(b)
 
 if st.button("refresh"):
   st.rerun()
