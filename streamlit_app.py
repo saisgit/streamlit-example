@@ -49,6 +49,12 @@ def highlight(sig):
     if sig == "P-SELL" or sig == "SSSSSS":
         return 'background-color: red'
 
+@st.cache_data(ttl=120)
+def get_data(conn):
+    data = conn.read(worksheet="Sheet2",usecols=list(range(45)),ttl="0").dropna(how="all")
+    df = pd.DataFrame(data)
+    return df
+	
 class NSE():
   pre_market_categories = ['NIFTY 50','Nifty Bank','Emerge','Securities in F&O','Others','All']
   equity_market_categories = []
@@ -88,8 +94,9 @@ styles = [
   dict(selector="th", props=th_props),
   dict(selector="td", props=td_props)
   ]
-data = conn.read(worksheet="Sheet2",usecols=list(range(45)),ttl="0").dropna(how="all")
-bbsqueeze = pd.DataFrame(data)
+#data = conn.read(worksheet="Sheet2",usecols=list(range(45)),ttl="0").dropna(how="all")
+#bbsqueeze = pd.DataFrame(data)
+bbsqueeze = get_data(conn)
 high = high.set_index('symbol').join(bbsqueeze.set_index('symbol'), on='symbol')
 high.reset_index(inplace=True)
 high['bb15m'] = np.where(((high.Close.astype(float) >= high.BBU_50_15m.astype(float))), "u15",np.where(((high.Close.astype(float) <= high.BBL_50_15m.astype(float))), "lo15",""))
