@@ -49,7 +49,7 @@ def highlight(sig):
     if sig == "P-SELL" or sig == "SSSSSS":
         return 'background-color: red'
 
-@st.cache_data(ttl=120)
+@st.cache_data
 def get_data(conn):
     data = conn.read(worksheet="Sheet2",usecols=list(range(45)),ttl="0").dropna(how="all")
     df = pd.DataFrame(data)
