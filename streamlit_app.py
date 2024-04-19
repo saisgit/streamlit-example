@@ -190,7 +190,7 @@ modify = st.checkbox("Nifty Stocks")
 if not modify:
         high = high
 else:
-	high =  high[(high["N50"].str.contains("Y"))]
+	high = high[(high["N50"].str.contains("Y", na=False))]
 	
 highB = high[(high["signal"].str.contains("BUY", na=False))]
 highS = high[(high["signal"].str.contains("SELL", na=False))]
