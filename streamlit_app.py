@@ -102,6 +102,8 @@ conditions = [
 		]
 choices = ['crsPP','crsR1','pp-R1', 'R1-R2', '>R2','crsblwPP','pp-S1','crsS1','S1-S2','<S2']
 high['hourPvt'] = np.select(conditions, choices, default='')
+#high['gaps'] = np.where(((high.open.astype(float) >= high.Yesthigh_price.astype(float)) & (high.open.astype(float) > high.Yestclose_price.astype(float).mul(1.002))), "GapUp",np.where((high.open.astype(float) <= high.Yestlow_price.astype(float)) & (high.open.astype(float) < high.Yestclose_price.astype(float).mul(0.998)), "GapDown",""))
+
 high = high[high["pp_dist"].isin(["P1","P2"])]
 #st.write(high)
 high['signal'] = np.where(((high.hourPvt.isin(["pp-R1","crsPP","crsR1",])) & ((high.Close.astype(float) >= high.BBU_5min.astype(float)))), "BUY",np.where(((high.hourPvt.isin(['crsblwPP','pp-S1','crsS1'])) & (high.Close.astype(float) <= high.BBL_5min.astype(float))), "SELL",""))
