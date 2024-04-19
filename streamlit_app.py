@@ -180,11 +180,11 @@ high['hourPvt'] = np.select(conditions, choices, default='')
 high = high[high["pp_dist"].isin(["P1","P2"])]
 #st.write(high)
 high['signal'] = np.where(((high.hourPvt.isin(["pp-R1","crsPP","crsR1",])) & ((high.Close.astype(float) >= high.BBU_5min.astype(float)))), "BUY",np.where(((high.hourPvt.isin(['crsblwPP','pp-S1','crsS1'])) & (high.Close.astype(float) <= high.BBL_5min.astype(float))), "SELL",""))
-high = st.dataframe(filter_dataframe(high))
+high2 = st.dataframe(filter_dataframe(high))
 #highB = high[(high["signal"].str.contains("BUY", na=False))]
 #highS = high[(high["signal"].str.contains("SELL", na=False))]
-highB = high[high["signal"].astype(str).str.contains("BUY")]
-highS = high[high["signal"].astype(str).str.contains("SELL")]
+highB = high2[high2["signal"].astype(str).str.contains("BUY")]
+highS = high2[high2["signal"].astype(str).str.contains("SELL")]
 col1, col2 = st.columns(2)
 with col1:
   st.header("sell")
