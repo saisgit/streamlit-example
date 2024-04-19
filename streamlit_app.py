@@ -102,12 +102,22 @@ conditions = [
 		]
 choices = ['crsPP','crsR1','pp-R1', 'R1-R2', '>R2','crsblwPP','pp-S1','crsS1','S1-S2','<S2']
 high['hourPvt'] = np.select(conditions, choices, default='')
-#high['gaps'] = np.where(((high.open.astype(float) >= high.Yesthigh_price.astype(float)) & (high.open.astype(float) > high.Yestclose_price.astype(float).mul(1.002))), "GapUp",np.where((high.open.astype(float) <= high.Yestlow_price.astype(float)) & (high.open.astype(float) < high.Yestclose_price.astype(float).mul(0.998)), "GapDown",""))
+high['gaps'] = np.where(((high.open.astype(float) >= high.Yesthigh_price.astype(float)) & (high.open.astype(float) > high.Yestclose_price.astype(float).mul(1.002))), "GapUp",np.where((high.open.astype(float) <= high.Yestlow_price.astype(float)) & (high.open.astype(float) < high.Yestclose_price.astype(float).mul(0.998)), "GapDown",""))
 
 high = high[high["pp_dist"].isin(["P1","P2"])]
 #st.write(high)
 high['signal'] = np.where(((high.hourPvt.isin(["pp-R1","crsPP","crsR1",])) & ((high.Close.astype(float) >= high.BBU_5min.astype(float)))), "BUY",np.where(((high.hourPvt.isin(['crsblwPP','pp-S1','crsS1'])) & (high.Close.astype(float) <= high.BBL_5min.astype(float))), "SELL",""))
 #high2 = st.dataframe(filter_dataframe(high))
+conditions = [
+	(high.Close.astype(float) >= high.BBU_5min.astype(float)) & (high.Close.astype(float) >= high.r1.astype(float)) & (high.bb15m == "u15") & (high.hourPvt.isin(["pp-R1","crsPP","crsR1"])) & (high.gaps == "GapUp"),
+	(high.Close.astype(float) >= high.BBU_5min.astype(float)) & (high.Close.astype(float) >= high.r1.astype(float)) & (high.bb15m == "u15") & (high.hourPvt.isin(["pp-R1","crsPP","crsR1"])),
+	(high.Close.astype(float) >= high.r1.astype(float)) & (high.gaps == "GapUp"),
+        (high.Close.astype(float) <= high.BBL_5min.astype(float)) & (high.Close.astype(float) <= high.s1.astype(float)) & (high.bb15m == "lo15") & (high.hourPvt.isin(['crsblwPP','pp-S1','crsS1'])) & (high.gaps == "GapDown"),
+	(high.Close.astype(float) <= high.BBL_5min.astype(float)) & (high.Close.astype(float) <= high.s1.astype(float)) & (high.bb15m == "lo15") & (high.hourPvt.isin(['crsblwPP','pp-S1','crsS1'])),
+	(high.Close.astype(float) <= high.s1.astype(float)) & (high.gaps == "GapDown"),
+	]
+choices = ['BBBBBB','P-BUY','B', 'SSSSSS', 'P-SELL','S']
+high['sig'] = np.select(conditions, choices, default='')
 modify = st.checkbox("All FNO Stocks")
 if modify:
         high = high
@@ -127,7 +137,7 @@ with col1:
   #df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   #st.table(df2)
   #s = st.dataframe(filter_nifty(highS))
-  s = highS.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
+  s = highS.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
   st.write(s)
 with col2:
   st.header("buy")
@@ -136,7 +146,7 @@ with col2:
   # df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   # st.table(df2)
   #b = st.dataframe(filter_nifty(highB))
-  b = highB.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
+  b = highB.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
   #st.dataframe(filter_dataframe(s))
   st.write(b)
 
