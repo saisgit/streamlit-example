@@ -180,11 +180,11 @@ high['hourPvt'] = np.select(conditions, choices, default='')
 high = high[high["pp_dist"].isin(["P1","P2"])]
 #st.write(high)
 high['signal'] = np.where(((high.hourPvt.isin(["pp-R1","crsPP","crsR1",])) & ((high.Close.astype(float) >= high.BBU_5min.astype(float)))), "BUY",np.where(((high.hourPvt.isin(['crsblwPP','pp-S1','crsS1'])) & (high.Close.astype(float) <= high.BBL_5min.astype(float))), "SELL",""))
-high2 = st.dataframe(filter_dataframe(high))
-#highB = high[(high["signal"].str.contains("BUY", na=False))]
-#highS = high[(high["signal"].str.contains("SELL", na=False))]
-highB = high2[high2["signal"].astype(str).str.contains("BUY")]
-highS = high2[high2["signal"].astype(str).str.contains("SELL")]
+#high2 = st.dataframe(filter_dataframe(high))
+highB = high[(high["signal"].str.contains("BUY", na=False))]
+highS = high[(high["signal"].str.contains("SELL", na=False))]
+#highB = high2[high2["signal"].astype(str).str.contains("BUY")]
+#highS = high2[high2["signal"].astype(str).str.contains("SELL")]
 col1, col2 = st.columns(2)
 with col1:
   st.header("sell")
@@ -194,7 +194,8 @@ with col1:
   #df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   #st.table(df2)
   s = highS.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
-  st.write(s)
+  st.dataframe(filter_dataframe(s))
+  #st.write(s)
 with col2:
   st.header("buy")
   # data = conn.read(worksheet="Sheet2",usecols=list(range(7)),ttl="0").dropna(how="all")
@@ -202,7 +203,8 @@ with col2:
   # df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   # st.table(df2)
   b = highB.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
-  st.write(b)
+  st.dataframe(filter_dataframe(s))
+  #st.write(b)
 
 if st.button("refresh"):
   st.rerun()
