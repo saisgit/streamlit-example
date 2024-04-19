@@ -106,8 +106,8 @@ high = high[high["pp_dist"].isin(["P1","P2"])]
 #st.write(high)
 high['signal'] = np.where(((high.hourPvt.isin(["pp-R1","crsPP","crsR1",])) & ((high.Close.astype(float) >= high.BBU_5min.astype(float)))), "BUY",np.where(((high.hourPvt.isin(['crsblwPP','pp-S1','crsS1'])) & (high.Close.astype(float) <= high.BBL_5min.astype(float))), "SELL",""))
 #high2 = st.dataframe(filter_dataframe(high))
-modify = st.checkbox("Nifty Stocks")
-if not modify:
+modify = st.checkbox("All FNO Stocks")
+if modify:
         high = high
 else:
 	high = high[(high["N50"].str.contains("Y", na=False))]
