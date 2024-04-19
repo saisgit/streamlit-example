@@ -186,6 +186,12 @@ high = high[high["pp_dist"].isin(["P1","P2"])]
 #st.write(high)
 high['signal'] = np.where(((high.hourPvt.isin(["pp-R1","crsPP","crsR1",])) & ((high.Close.astype(float) >= high.BBU_5min.astype(float)))), "BUY",np.where(((high.hourPvt.isin(['crsblwPP','pp-S1','crsS1'])) & (high.Close.astype(float) <= high.BBL_5min.astype(float))), "SELL",""))
 #high2 = st.dataframe(filter_dataframe(high))
+modify = st.checkbox("Nifty Stocks")
+if not modify:
+        high = high
+else:
+	high =  high[(high["N50"].str.contains("Y"))]
+	
 highB = high[(high["signal"].str.contains("BUY", na=False))]
 highS = high[(high["signal"].str.contains("SELL", na=False))]
 #highB = high2[high2["signal"].astype(str).str.contains("BUY")]
@@ -198,9 +204,8 @@ with col1:
   #df = df.reset_index(drop=True)
   #df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   #st.table(df2)
-  s = st.dataframe(filter_nifty(highS))
-  s = s.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
-  
+  #s = st.dataframe(filter_nifty(highS))
+  s = highS.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
   st.write(s)
 with col2:
   st.header("buy")
@@ -208,10 +213,9 @@ with col2:
   # df = pd.DataFrame(data).head(10)
   # df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   # st.table(df2)
-  b = st.dataframe(filter_nifty(highB))
-  b = b.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
+  #b = st.dataframe(filter_nifty(highB))
+  b = highB.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
   #st.dataframe(filter_dataframe(s))
-  
   st.write(b)
 
 if st.button("refresh"):
