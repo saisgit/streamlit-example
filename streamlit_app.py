@@ -43,7 +43,12 @@ st.markdown(f"""
     </style>""",
     unsafe_allow_html=True,
 )
-
+def filter_nifty(df: pd.DataFrame) -> pd.DataFrame:
+	modify = st.checkbox("Nifty Stocks")
+	if not modify:
+        	return df
+	return df[df["N50"].astype(str).str.contains("Y")]
+	
 def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     """
     Adds a UI on top of a dataframe to let viewers filter columns
@@ -194,7 +199,7 @@ with col1:
   #df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   #st.table(df2)
   s = highS.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
-  st.dataframe(filter_dataframe(s))
+  st.dataframe(filter_nifty(s))
   #st.write(s)
 with col2:
   st.header("buy")
@@ -203,7 +208,8 @@ with col2:
   # df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   # st.table(df2)
   b = highB.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
-  st.dataframe(filter_dataframe(s))
+  #st.dataframe(filter_dataframe(s))
+  st.dataframe(filter_nifty(b))
   #st.write(b)
 
 if st.button("refresh"):
