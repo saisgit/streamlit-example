@@ -51,6 +51,7 @@ def highlight(sig):
 
 @st.cache_data
 def get_data(conn):
+    conn = st.experimental_connection("gsheets", type=GSheetsConnection)
     data = conn.read(worksheet="Sheet2",usecols=list(range(45)),ttl="0").dropna(how="all")
     df = pd.DataFrame(data)
     return df
@@ -82,7 +83,7 @@ high = nse.equity_market_data("Securities in F&O")[['open','dayHigh','dayLow','l
 high = high.rename(columns={"totalTradedVolume": "volume",'lastPrice':'Close'})
 high = round(high,2)
 #st.write(high)
-conn = st.experimental_connection("gsheets", type=GSheetsConnection)
+#conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 # style
 th_props = [
   ('font-size', '10px')
