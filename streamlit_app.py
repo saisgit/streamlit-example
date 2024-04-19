@@ -43,6 +43,11 @@ st.markdown(f"""
     </style>""",
     unsafe_allow_html=True,
 )
+def highlight(sig):
+    if sig == "P_BUY" or sig == "BBBBBB":
+        return 'background-color: green'
+    if sig == "P-SELL" or sig == "SSSSSS":
+        return 'background-color: red'
 
 class NSE():
   pre_market_categories = ['NIFTY 50','Nifty Bank','Emerge','Securities in F&O','Others','All']
@@ -138,6 +143,7 @@ with col1:
   #st.table(df2)
   #s = st.dataframe(filter_nifty(highS))
   s = highS.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
+  s = s.style.applymap(highlight, subset=['sig'])
   st.write(s)
 with col2:
   st.header("buy")
@@ -148,6 +154,7 @@ with col2:
   #b = st.dataframe(filter_nifty(highB))
   b = highB.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
   #st.dataframe(filter_dataframe(s))
+  b = b.style.applymap(highlight, subset=['sig'])
   st.write(b)
 
 if st.button("refresh"):
