@@ -83,7 +83,7 @@ styles = [
   dict(selector="th", props=th_props),
   dict(selector="td", props=td_props)
   ]
-data = conn.read(worksheet="Sheet2",usecols=list(range(35)),ttl="0").dropna(how="all")
+data = conn.read(worksheet="Sheet2",usecols=list(range(45)),ttl="0").dropna(how="all")
 bbsqueeze = pd.DataFrame(data)
 high = high.set_index('symbol').join(bbsqueeze.set_index('symbol'), on='symbol')
 high.reset_index(inplace=True)
