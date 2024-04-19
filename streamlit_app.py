@@ -144,8 +144,8 @@ with col1:
   #st.table(df2)
   #s = st.dataframe(filter_nifty(highS))
   s = highS.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
-  #s = s.style.applymap(highlight, subset=['sig'])
-  st.write(s)
+  s = s.style.applymap(highlight, subset=['sig'])
+  st.dataframe(s)
 with col2:
   st.header("buy")
   # data = conn.read(worksheet="Sheet2",usecols=list(range(7)),ttl="0").dropna(how="all")
@@ -155,8 +155,8 @@ with col2:
   #b = st.dataframe(filter_nifty(highB))
   b = highB.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
   #st.dataframe(filter_dataframe(s))
-  #b = b.style.applymap(highlight, subset=['sig'])
-  st.write(b)
+  b = b.style.applymap(highlight, subset=['sig'])
+  st.dataframe(b)
 
 if st.button("refresh"):
   st.rerun()
