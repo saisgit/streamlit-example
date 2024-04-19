@@ -144,7 +144,7 @@ with col1:
   #st.table(df2)
   #s = st.dataframe(filter_nifty(highS))
   s = highS.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
-  s = s.style.applymap(highlight, subset=['sig'])
+  #s = s.style.applymap(highlight, subset=['sig'])
   st.write(s)
 with col2:
   st.header("buy")
@@ -155,7 +155,7 @@ with col2:
   #b = st.dataframe(filter_nifty(highB))
   b = highB.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
   #st.dataframe(filter_dataframe(s))
-  b = b.style.applymap(highlight, subset=['sig'])
+  #b = b.style.applymap(highlight, subset=['sig'])
   st.write(b)
 
 if st.button("refresh"):
