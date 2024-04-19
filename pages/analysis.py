@@ -384,5 +384,5 @@ if st.button("Get analysis"):
 #   st.write(data)
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 data = conn.read(worksheet="Sheet2",usecols=list(range(35)),ttl="0").dropna(how="all")
-st.dataframe(filter_dataframe(s))
+st.dataframe(filter_dataframe(data))
   
