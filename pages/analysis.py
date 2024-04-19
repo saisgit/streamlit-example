@@ -185,8 +185,11 @@ def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy,fnostocks):
     fno = nse.equity_market_data(str(fnostocks),symbol_list=True) #'Securities in F&O'
     n50 = nse.equity_market_data('NIFTY 50',symbol_list=True)
     n50.remove("NIFTY 50")
-    df1 = nse.equity_market_data("Securities in F&O")[['open','dayHigh','dayLow','lastPrice','totalTradedVolume','previousClose']].reset_index()
-    df1 = df1.rename(columns={"totalTradedVolume": "volume"})
+    #df1 = nse.equity_market_data("Securities in F&O")[['open','dayHigh','dayLow','lastPrice','totalTradedVolume','previousClose']].reset_index()
+    #df1 = df1.rename(columns={"totalTradedVolume": "volume"})
+    df1 = nse.getbhavcopy(previous_day_dmy)
+    df1 = df1.rename(columns={"SYMBOL":"symbol","OPEN_PRICE": "open","HIGH_PRICE": "dayHigh","LOW_PRICE": "dayLow","CLOSE_PRICE": "lastPrice","TTL_TRD_QNTY": "volume","PREV_CLOSE":"previousClose"})
+    df1 = df1[df1['symbol'].isin(fno)]
     df1 = round(df1,2)
     all = fno
     ydy = nse.getbhavcopy(previous_day_dmy)
@@ -227,7 +230,7 @@ def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy,fnostocks):
     full['sdist'] = abs(round(((full.s1.astype(float)-full.s2.astype(float))/full.s1.astype(float))*100,2))
     full['cpr'] = round((abs(full.tc.astype(float)-full.bc.astype(float))/full.bc.astype(float))*100,2)
     full['yest_cpr'] = round((abs(full.yest_tc.astype(float)-full.yest_bc.astype(float))/full.yest_bc.astype(float))*100,2)
-    full['gaps'] = np.where(((full.open.astype(float) >= full.Yesthigh_price.astype(float)) & (full.open.astype(float) > full.Yestclose_price.astype(float).mul(1.002))), "GapUp",np.where((full.open.astype(float) <= full.Yestlow_price.astype(float)) & (full.open.astype(float) < full.Yestclose_price.astype(float).mul(0.998)), "GapDown",""))
+    #full['gaps'] = np.where(((full.open.astype(float) >= full.Yesthigh_price.astype(float)) & (full.open.astype(float) > full.Yestclose_price.astype(float).mul(1.002))), "GapUp",np.where((full.open.astype(float) <= full.Yestlow_price.astype(float)) & (full.open.astype(float) < full.Yestclose_price.astype(float).mul(0.998)), "GapDown",""))
     full['cams'] = np.where(((full.camR3.astype(float) <= full.YcamR3.astype(float)) & (full.camS3.astype(float) >= full.YcamS3.astype(float))), "CM","")
     full['candle'] = np.where(((full.Yesthigh_price.astype(float) <= full.dbyhigh_price.astype(float)) & (full.Yestlow_price.astype(float) >= full.dbylow_price.astype(float))), "inside",np.where((full.Yestlow_price.astype(float) <= full.dbylow_price.astype(float)) & (full.Yesthigh_price.astype(float) >= full.dbyhigh_price.astype(float)), "outside",""))
     full['candle'] = full['candle'] + full['cpr'].astype(str)
@@ -354,7 +357,7 @@ def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy,fnostocks):
         bb_df['pp_dist'] = np.where((bb_df['1hrPP'].astype(float) >=float(-0.5)) & (bb_df['1hrPP'].astype(float) <=float(0.5)), "P1",np.where((bb_df['1hrPP'].astype(float) >=float(-1)) & (bb_df['1hrPP'].astype(float) <=float(1)),"P2",np.where((bb_df['1hrPP'].astype(float) >=float(-1.5)) & (bb_df['1hrPP'].astype(float) <=float(1.5)),"P3","")))
         bb_df['SMA_50_15m_dist'] = np.where((bb_df['SMA_50_15m_d'].astype(float) >=float(-0.5)) & (bb_df['SMA_50_15m_d'].astype(float) <=float(0.5)), "P1",np.where((bb_df['SMA_50_15m_d'].astype(float) >=float(-1)) & (bb_df['SMA_50_15m_d'].astype(float) <=float(1)),"P2",np.where((bb_df['SMA_50_15m_d'].astype(float) >=float(-1.5)) & (bb_df['SMA_50_15m_d'].astype(float) <=float(1.5)),"P3","")))
         bb_df['SMA_20_1hr_dist'] = np.where((bb_df['SMA_20_1hr_d'].astype(float) >=float(-0.5)) & (bb_df['SMA_20_1hr_d'].astype(float) <=float(0.5)), "P1",np.where((bb_df['SMA_20_1hr_d'].astype(float) >=float(-1)) & (bb_df['SMA_20_1hr_d'].astype(float) <=float(1)),"P2",np.where((bb_df['SMA_20_1hr_d'].astype(float) >=float(-1.5)) & (bb_df['SMA_20_1hr_d'].astype(float) <=float(1.5)),"P3","")))
-        fulldf = bb_df.loc[:,['symbol','go','pp_dist','SMA_50_15m_dist','SMA_20_1hr_dist','rdist','sdist','bb5mdiff','bbands15m','todayshock','shock','dayvol','cls_5m_r2','hourPvt','dayPvt','bb_crs','N50','candle','ema50vwap','ev','pr_dist_hr','ps_dist_hr','BBU_5min','BBL_5min','BBU_50_15m','BBL_50_15m','pp_hour','r1_hour','r2_hour','s1_hour','s2_hour']]
+        fulldf = bb_df.loc[:,['symbol','go','pp_dist','SMA_50_15m_dist','SMA_20_1hr_dist','rdist','sdist','bb5mdiff','bbands15m','todayshock','shock','dayvol','cls_5m_r2','hourPvt','dayPvt','bb_crs','N50','candle','ema50vwap','ev','pr_dist_hr','ps_dist_hr','BBU_5min','BBL_5min','BBU_50_15m','BBL_50_15m','pp_hour','r1_hour','r2_hour','s1_hour','s2_hour','r1','s1','Yesthigh_price','Yestlow_price','Yestclose_price']]
         fulldf = fulldf.drop_duplicates()
         fulldf = fulldf.style.applymap(volshock, subset=['todayshock','shock'])
         end = time.time()
