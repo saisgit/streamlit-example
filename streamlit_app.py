@@ -128,7 +128,8 @@ if modify:
         high = high
 else:
 	high = high[(high["N50"].str.contains("Y", na=False))]
-	
+
+high = round(high,2)
 highB = high[(high["signal"].str.contains("BUY", na=False))]
 highS = high[(high["signal"].str.contains("SELL", na=False))]
 #highB = high2[high2["signal"].astype(str).str.contains("BUY")]
