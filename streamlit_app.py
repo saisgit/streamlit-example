@@ -199,7 +199,7 @@ with col1:
   #df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   #st.table(df2)
   s = st.dataframe(filter_nifty(highS))
-  s = highS.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
+  s = s.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
   
   st.write(s)
 with col2:
@@ -209,7 +209,7 @@ with col2:
   # df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   # st.table(df2)
   b = st.dataframe(filter_nifty(highB))
-  b = highB.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
+  b = b.loc[:,['symbol','signal','pChange','hourPvt','sdist','bb15m','bbands15m']]
   #st.dataframe(filter_dataframe(s))
   
   st.write(b)
