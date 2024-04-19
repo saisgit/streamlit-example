@@ -50,7 +50,7 @@ def highlight(sig):
         return 'background-color: red'
 
 @st.cache_data
-def get_data(conn):
+def get_data():
     conn = st.experimental_connection("gsheets", type=GSheetsConnection)
     data = conn.read(worksheet="Sheet2",usecols=list(range(45)),ttl="0").dropna(how="all")
     df = pd.DataFrame(data)
@@ -97,7 +97,7 @@ styles = [
   ]
 #data = conn.read(worksheet="Sheet2",usecols=list(range(45)),ttl="0").dropna(how="all")
 #bbsqueeze = pd.DataFrame(data)
-bbsqueeze = get_data(conn)
+bbsqueeze = get_data()
 high = high.set_index('symbol').join(bbsqueeze.set_index('symbol'), on='symbol')
 high.reset_index(inplace=True)
 high['bb15m'] = np.where(((high.Close.astype(float) >= high.BBU_50_15m.astype(float))), "u15",np.where(((high.Close.astype(float) <= high.BBL_50_15m.astype(float))), "lo15",""))
