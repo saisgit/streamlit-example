@@ -146,7 +146,7 @@ with col1:
   s = highS.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
   s = s.style.applymap(highlight, subset=['sig'])
   #st.dataframe(s)
-  st.dataframe(s.style.format({"f": "{:.2f}"}), use_container_width=True)
+  st.dataframe(s.format({"f": "{:.2f}"}), use_container_width=True)
 with col2:
   st.header("buy")
   # data = conn.read(worksheet="Sheet2",usecols=list(range(7)),ttl="0").dropna(how="all")
@@ -158,7 +158,7 @@ with col2:
   #st.dataframe(filter_dataframe(s))
   b = b.style.applymap(highlight, subset=['sig'])
   #st.dataframe(b)
-  st.dataframe(b.style.format({"f": "{:.2f}"}), use_container_width=True)
+  st.dataframe(b.format({"f": "{:.2f}"}), use_container_width=True)
 
 if st.button("refresh"):
   st.rerun()
