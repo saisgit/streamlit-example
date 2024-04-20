@@ -10,10 +10,10 @@ if button:
     with st.spinner():
         counter = 0
         while True:
-            print("Waiting...")
+            st.write("Waiting...")
             if placeholder.button("Stop", key=counter): # otherwise streamlit complains that you're creating two of the same widget
                 break
-            time.sleep(3)
+            time.sleep(5)
             counter += 1
 
 st.write("done")  # in this sample this code never executed
