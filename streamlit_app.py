@@ -177,8 +177,22 @@ with col2:
   st.dataframe(b)
   #st.dataframe(b.format({"f": "{:.2f}"}))
 
-if st.button("refresh"):
-  st.rerun()
+#if st.button("refresh"):
+#  st.rerun()
+button = st.button("Start Auto-Refresh")
+placeholder = st.empty()
+if button:
+    with st.spinner():
+        counter = 0
+        while True:
+            #print("Waiting...")
+	    st.rerun()
+            if placeholder.button("Stop", key=counter): # otherwise streamlit complains that you're creating two of the same widget
+                break
+            time.sleep(15)
+            counter += 1
+
+st.write("stopped")  # in this sample this code never executed
 
 
 col1, col2,col3, col4,col5, col6 = st.columns(6)
