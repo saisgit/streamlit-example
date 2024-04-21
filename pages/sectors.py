@@ -149,9 +149,9 @@ if __name__ == '__main__':
 	# prev_day_dmy = working_days[-1].strftime("%d%m%Y")
 	#previous_day_dmy = str(working_days[-2].strftime("%d%m%Y")).lstrip().rstrip()
 	previous_day_dmy = st.text_input('previous_day_dmy', '18042024')
-    	secday = daySector(sectors,previous_day_dmy)
+	secday = daySector(sectors,previous_day_dmy)
 	sec15min = sector15m(sectors,previous_day_dmy,'')
-    	fulldf = secday.set_index('symbol').join(sec15min.set_index('symbol'), on='symbol')
+	fulldf = secday.set_index('symbol').join(sec15min.set_index('symbol'), on='symbol')
 	fulldf.reset_index(inplace=True)
 	conditions = [
         	(fulldf.symbol =='NIFTY_CONSR_DURBL.NS'), 
@@ -171,9 +171,9 @@ if __name__ == '__main__':
 	]
 	choices = ['NIFTY CONSR DURBL', 'NIFTY FIN SERVICE', 'NIFTY FINSRV25 50', 'NIFTY IT', 'NIFTY PHARMA', 'NIFTY AUTO', 'NIFTY HEALTHCARE', 'NIFTY FMCG', 'NIFTY REALTY', 'NIFTY METAL', 'NIFTY BANK', 'NIFTY MEDIA', 'NIFTY OIL AND GAS', 'NIFTY PSU BANK']
 	fulldf['nsymbol'] = np.select(conditions, choices, default='')
-    	fulldf = fulldf.loc[:, ['nsymbol','symbol','Yesthigh_price','Yestlow_price','Yestclose_price','pp','r1','s1','bbands15m','BBU_50_15m','BBL_50_15m','bbsqz','cpr']]
+	fulldf = fulldf.loc[:, ['nsymbol','symbol','Yesthigh_price','Yestlow_price','Yestclose_price','pp','r1','s1','bbands15m','BBU_50_15m','BBL_50_15m','bbsqz','cpr']]
 	fulldf = fulldf.sort_values(by=['bbands15m'], ascending=True)
-    	end = time.time()
+	end = time.time()
 	st.write("Time Taken:{}".format(end - start))
 	st.write(fulldf)
 
