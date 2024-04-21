@@ -55,7 +55,6 @@ class Moneycontrol:
     #df = df[df['Datetime'].astype(str).str.contains(str(start1.strftime("%Y-%m-%d")))]
     #df = df.head(1)
     return df
-
 def sector15m(fno,current_day_dmy,flag):
     mydf = pd.DataFrame()
     for stock in fno:
@@ -132,16 +131,16 @@ def daySector(fno,current_day_dmy):
 
 
 if __name__ == '__main__':
-    start = time.time()
-	testdate = sys.argv[1]
-	if len(testdate) != 0:
-		today = datetime.strptime(testdate, '%d%m%Y').date()
-	else:
-		today = datetime.today()
+    	start = time.time()
+	#testdate = sys.argv[1]
+	#if len(testdate) != 0:
+	#	today = datetime.strptime(testdate, '%d%m%Y').date()
+	#else:
+	today = datetime.today()
 	sectors = ['^NSEI','^NSEBANK','^CNXREALTY','^CNXPSUBANK','^CNXENERGY',
             'NIFTY_FIN_SERVICE.NS','^CNXFMCG','^CNXINFRA','^CNXPHARMA','NIFTY_HEALTHCARE.NS','NIFTY_OIL_AND_GAS.NS','^CNXMETAL',
             '^CNXAUTO','^CNXMEDIA','^CNXIT','NIFTY_CONSR_DURBL.NS']
-    #toDate= today.strftime('%Y-%m-%d %H:%M:%S')
+    	#toDate= today.strftime('%Y-%m-%d %H:%M:%S')
 	#end_date = pd.Timestamp(toDate, tz='Asia/Kolkata').date()
 	#start_date = end_date - pd.Timedelta(days=6)
 	#schedule = nse.schedule(start_date=start_date, end_date=end_date)
@@ -149,33 +148,34 @@ if __name__ == '__main__':
 	#current_day_dmy = working_days[-1].strftime("%d%m%Y")
 	# prev_day_dmy = working_days[-1].strftime("%d%m%Y")
 	#previous_day_dmy = str(working_days[-2].strftime("%d%m%Y")).lstrip().rstrip()
-    previous_day_dmy =''
-    secday = daySector(sectors,previous_day_dmy)
+    	previous_day_dmy = st.text_input('previous_day_dmy', '18042024')
+    	secday = daySector(sectors,previous_day_dmy)
 	sec15min = sector15m(sectors,previous_day_dmy,'')
-    fulldf = secday.set_index('symbol').join(sec15min.set_index('symbol'), on='symbol')
+    	fulldf = secday.set_index('symbol').join(sec15min.set_index('symbol'), on='symbol')
 	fulldf.reset_index(inplace=True)
 	conditions = [
-        (fulldf.symbol =='NIFTY_CONSR_DURBL.NS'), 
+        	(fulldf.symbol =='NIFTY_CONSR_DURBL.NS'), 
 		(fulldf.symbol =='NIFTY_FIN_SERVICE.NS'),
 		(fulldf.symbol =='NIFTY_FIN_SERVICE.NS'),
 		(fulldf.symbol =='^CNXIT'),
 		(fulldf.symbol =='^CNXPHARMA'),
-        (fulldf.symbol =='^CNXAUTO'),
+        	(fulldf.symbol =='^CNXAUTO'),
 		(fulldf.symbol =='NIFTY_HEALTHCARE.NS'),
 		(fulldf.symbol =='^CNXFMCG'),
 		(fulldf.symbol =='^CNXREALTY'),
 		(fulldf.symbol =='^CNXMETAL'),
 		(fulldf.symbol =='^NSEBANK'),
 		(fulldf.symbol =='^CNXMEDIA'),
-        (fulldf.symbol =='NIFTY_OIL_AND_GAS.NS'),
+        	(fulldf.symbol =='NIFTY_OIL_AND_GAS.NS'),
 		(fulldf.symbol =='^CNXPSUBANK'),
 	]
 	choices = ['NIFTY CONSR DURBL', 'NIFTY FIN SERVICE', 'NIFTY FINSRV25 50', 'NIFTY IT', 'NIFTY PHARMA', 'NIFTY AUTO', 'NIFTY HEALTHCARE', 'NIFTY FMCG', 'NIFTY REALTY', 'NIFTY METAL', 'NIFTY BANK', 'NIFTY MEDIA', 'NIFTY OIL AND GAS', 'NIFTY PSU BANK']
 	fulldf['nsymbol'] = np.select(conditions, choices, default='')
-    fulldf = fulldf.loc[:, ['nsymbol','symbol','Yesthigh_price','Yestlow_price','Yestclose_price','pp','r1','s1','bbands15m','BBU_50_15m','BBL_50_15m','bbsqz','cpr']]
+    	fulldf = fulldf.loc[:, ['nsymbol','symbol','Yesthigh_price','Yestlow_price','Yestclose_price','pp','r1','s1','bbands15m','BBU_50_15m','BBL_50_15m','bbsqz','cpr']]
 	fulldf = fulldf.sort_values(by=['bbands15m'], ascending=True)
-    end = time.time()
-	print("Time Taken:{}".format(end - start))
+    	end = time.time()
+	st.write("Time Taken:{}".format(end - start))
+	st.write(fulldf)
 
 
       
