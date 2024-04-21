@@ -234,6 +234,10 @@ with col4:
 	high1 = high.loc[(high["sector"].str.contains("BANK", na=False))]
 	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+	st.subheader("chem")
+	high1 = high.loc[(high["sector"].str.contains("CHEMICALS", na=False))]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col5:
 	st.subheader("oilgas")
