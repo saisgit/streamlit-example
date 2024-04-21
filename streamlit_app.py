@@ -43,7 +43,7 @@ st.markdown(f"""
     	background-color: green;
      	font-size:7px;
     }}
-    td#T_a0b53_row0_col0 {{padding:1px;}}
+    div.st-emotion-cache-cnbvxy th, .st-emotion-cache-cnbvxy td {{padding:1px;}}
     table {{background-color: green;font-size:9px;padding:1px;}}
     markdown {{background-color: green;font-size:9px;padding:1px;}}
     </style>""",
