@@ -171,7 +171,7 @@ with col2:
 
 if st.button("refresh"):
   st.rerun()
-col1, col2 = st.columns(2)
+col1, col2,col3, col4,col5, col6,col7 = st.columns(7)
 
 with col1:
   st.subheader("fmcg")
