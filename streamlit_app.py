@@ -138,7 +138,7 @@ if modify:
 else:
 	high = high[(high["N50"].str.contains("Y", na=False))]
 
-high = high.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m','sector']]
+#high = high.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m','sector']]
 highB = high[(high["signal"].str.contains("BUY", na=False))]
 highS = high[(high["signal"].str.contains("SELL", na=False))]
 #highB = high2[high2["signal"].astype(str).str.contains("BUY")]
@@ -152,7 +152,7 @@ with col1:
   #df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   #st.table(df2)
   #s = st.dataframe(filter_nifty(highS))
-  s = highS#.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
+  s = highS.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m','sector']]
   #s = s.style.applymap(highlight, subset=['sig'])
   st.dataframe(s)
   #st.dataframe(s.format({"f": "{:.2f}"}))
@@ -163,7 +163,7 @@ with col2:
   # df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   # st.table(df2)
   #b = st.dataframe(filter_nifty(highB))
-  b = highB#.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
+  b = highB.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m','sector']]
   #st.dataframe(filter_dataframe(s))
   #b = b.style.applymap(highlight, subset=['sig'])
   st.dataframe(b)
@@ -172,10 +172,12 @@ with col2:
 if st.button("refresh"):
   st.rerun()
 col1, col2 = st.columns(2)
+
 with col1:
   st.header("fmcg")
-  highB = high.loc[(high["sector"].str.contains("FMCG", na=False))]
-  st.dataframe(highB)
+  high1 = high.loc[(high["sector"].str.contains("FMCG", na=False))]
+  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+  st.dataframe(hh)
 #if st.button("update"):
 #  conn.update(worksheet="Sheet2",data=high)
 #  st.success("worksheet updated")
