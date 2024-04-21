@@ -130,7 +130,7 @@ def daySector(fno,current_day_dmy):
     return mydf.loc[:, ['symbol','Yesthigh_price','Yestlow_price','Yestclose_price','pp','r1','s1','cpr']]
 
 
-if __name__ == '__main__':
+def main(previous_day_dmy):
 	start = time.time()
 	#testdate = sys.argv[1]
 	#if len(testdate) != 0:
@@ -148,7 +148,7 @@ if __name__ == '__main__':
 	#current_day_dmy = working_days[-1].strftime("%d%m%Y")
 	# prev_day_dmy = working_days[-1].strftime("%d%m%Y")
 	#previous_day_dmy = str(working_days[-2].strftime("%d%m%Y")).lstrip().rstrip()
-	previous_day_dmy = st.text_input('previous_day_dmy', '18042024')
+	
 	secday = daySector(sectors,previous_day_dmy)
 	sec15min = sector15m(sectors,previous_day_dmy,'')
 	fulldf = secday.set_index('symbol').join(sec15min.set_index('symbol'), on='symbol')
@@ -178,7 +178,10 @@ if __name__ == '__main__':
 	st.write(fulldf)
 
 
-      
+previous_day_dmy = st.text_input('previous_day_dmy', '21042024')
+if st.button("Get Sector Data"):
+	df = main(previous_day_dmy)
+	st.write(df)
 # button = st.button("start")
 # placeholder = st.empty()
 
