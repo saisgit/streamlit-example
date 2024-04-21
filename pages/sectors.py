@@ -175,7 +175,7 @@ def main(previous_day_dmy):
 	fulldf = fulldf.sort_values(by=['bbands15m'], ascending=True)
 	end = time.time()
 	st.write("Time Taken:{}".format(end - start))
-	st.write(fulldf)
+	return fulldf
 
 
 previous_day_dmy = st.text_input('previous_day_dmy', '21042024')
