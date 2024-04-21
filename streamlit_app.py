@@ -259,7 +259,7 @@ def main():
 		st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 
-button = st.button("Start Auto-Refresh")
+button = st.button("Start Refresh")
 placeholder = st.empty()
 if button:
     with st.spinner():
