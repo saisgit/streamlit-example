@@ -131,7 +131,7 @@ def daySector(fno,current_day_dmy):
 
 
 if __name__ == '__main__':
-    	start = time.time()
+	start = time.time()
 	#testdate = sys.argv[1]
 	#if len(testdate) != 0:
 	#	today = datetime.strptime(testdate, '%d%m%Y').date()
@@ -148,7 +148,7 @@ if __name__ == '__main__':
 	#current_day_dmy = working_days[-1].strftime("%d%m%Y")
 	# prev_day_dmy = working_days[-1].strftime("%d%m%Y")
 	#previous_day_dmy = str(working_days[-2].strftime("%d%m%Y")).lstrip().rstrip()
-    	previous_day_dmy = st.text_input('previous_day_dmy', '18042024')
+	previous_day_dmy = st.text_input('previous_day_dmy', '18042024')
     	secday = daySector(sectors,previous_day_dmy)
 	sec15min = sector15m(sectors,previous_day_dmy,'')
     	fulldf = secday.set_index('symbol').join(sec15min.set_index('symbol'), on='symbol')
