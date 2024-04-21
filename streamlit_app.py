@@ -43,9 +43,9 @@ st.markdown(f"""
     	background-color: green;
      	font-size:7px;
     }}
-    div.st-emotion-cache-cnbvxy th, .st-emotion-cache-cnbvxy td {{padding:1px;}}
-    table {{background-color: green;font-size:9px;padding:1px;}}
-    markdown {{background-color: green;font-size:9px;padding:1px;}}
+    div.st-emotion-cache-cnbvxy th, .st-emotion-cache-cnbvxy td {{padding:2px;}}
+    table {{background-color: green;font-size:12px;}}
+    markdown {{background-color: green;font-size:12px;}}
     </style>""",
     unsafe_allow_html=True,
 )
@@ -195,37 +195,37 @@ with col2:
 	st.subheader("pharma")
 	high1 = high.loc[(high["sector"].str.contains("PHARMA", na=False))]
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.table(hh)
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col3:
 	st.subheader("media")
 	high1 = high.loc[(high["sector"].str.contains("MEDIA", na=False))]
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.table(hh)
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col4:
 	st.subheader("IT")
 	high1 = high.loc[(high["sector"].str.contains("IT", na=False))]
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.table(hh)
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col5:
 	st.subheader("oilgas")
 	high1 = high.loc[(high["sector"].str.contains("OILnGAS", na=False))]
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.table(hh)
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col6:
 	st.subheader("infra")
 	high1 = high.loc[(high["sector"].str.contains("INFRA", na=False))]
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.table(hh)
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col7:
 	st.subheader("energy")
 	high1 = high.loc[(high["sector"].str.contains("ENERGY", na=False))]
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.table(hh)
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 #if st.button("update"):
 #  conn.update(worksheet="Sheet2",data=high)
 #  st.success("worksheet updated")
