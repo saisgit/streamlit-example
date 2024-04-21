@@ -145,6 +145,7 @@ else:
 	high = high[(high["N50"].str.contains("Y", na=False))]
 
 #high = high.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m','sector']]
+high['pChange'] = high['pChange'].apply(lambda x: "{:,.2f}".format(x))
 highB = high[(high["signal"].str.contains("BUY", na=False))]
 highS = high[(high["signal"].str.contains("SELL", na=False))]
 #highB = high2[high2["signal"].astype(str).str.contains("BUY")]
@@ -189,7 +190,6 @@ with col1:
 	#st.dataframe(hh)
 	#df2=hh.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
 	#st.table(hh)
-	hh['pChange'] = hh['pChange'].apply(lambda x: "{:,.2f}%".format(x))
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 	st.subheader("energy")
