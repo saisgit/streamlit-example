@@ -258,7 +258,7 @@ def main():
 		hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 		st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
-
+main()
 button = st.button("Start Refresh")
 placeholder = st.empty()
 if button:
