@@ -98,6 +98,7 @@ styles = [
 #data = conn.read(worksheet="Sheet2",usecols=list(range(45)),ttl="0").dropna(how="all")
 #bbsqueeze = pd.DataFrame(data)
 bbsqueeze = get_data()
+bbsqueeze = bbsqueeze[bbsqueeze["pp_dist"].isin(["P1","P2"])]
 high = high.set_index('symbol').join(bbsqueeze.set_index('symbol'), on='symbol')
 high.reset_index(inplace=True)
 high['bb15m'] = np.where(((high.Close.astype(float) >= high.BBU_50_15m.astype(float))), "u15",np.where(((high.Close.astype(float) <= high.BBL_50_15m.astype(float))), "lo15",""))
@@ -117,7 +118,7 @@ choices = ['crsPP','crsR1','pp-R1', 'R1-R2', '>R2','crsblwPP','pp-S1','crsS1','S
 high['hourPvt'] = np.select(conditions, choices, default='')
 high['gaps'] = np.where(((high.open.astype(float) >= high.Yesthigh_price.astype(float)) & (high.open.astype(float) > high.Yestclose_price.astype(float).mul(1.002))), "GapUp",np.where((high.open.astype(float) <= high.Yestlow_price.astype(float)) & (high.open.astype(float) < high.Yestclose_price.astype(float).mul(0.998)), "GapDown",""))
 
-high = high[high["pp_dist"].isin(["P1","P2"])]
+#high = high[high["pp_dist"].isin(["P1","P2"])]
 #st.write(high)
 high['signal'] = np.where(((high.hourPvt.isin(["pp-R1","crsPP","crsR1",])) & ((high.Close.astype(float) >= high.BBU_5min.astype(float)))), "BUY",np.where(((high.hourPvt.isin(['crsblwPP','pp-S1','crsS1'])) & (high.Close.astype(float) <= high.BBL_5min.astype(float))), "SELL",""))
 #high2 = st.dataframe(filter_dataframe(high))
@@ -137,7 +138,7 @@ if modify:
 else:
 	high = high[(high["N50"].str.contains("Y", na=False))]
 
-high = round(high,2)
+high = high.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m','sector']]
 highB = high[(high["signal"].str.contains("BUY", na=False))]
 highS = high[(high["signal"].str.contains("SELL", na=False))]
 #highB = high2[high2["signal"].astype(str).str.contains("BUY")]
@@ -151,7 +152,7 @@ with col1:
   #df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   #st.table(df2)
   #s = st.dataframe(filter_nifty(highS))
-  s = highS.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
+  s = highS#.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
   #s = s.style.applymap(highlight, subset=['sig'])
   st.dataframe(s)
   #st.dataframe(s.format({"f": "{:.2f}"}))
@@ -162,7 +163,7 @@ with col2:
   # df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   # st.table(df2)
   #b = st.dataframe(filter_nifty(highB))
-  b = highB.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
+  b = highB#.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m']]
   #st.dataframe(filter_dataframe(s))
   #b = b.style.applymap(highlight, subset=['sig'])
   st.dataframe(b)
@@ -170,6 +171,11 @@ with col2:
 
 if st.button("refresh"):
   st.rerun()
+col1, col2 = st.columns(2)
+with col1:
+  st.header("fmcg")
+  highB = high.loc[(high["sector"].str.contains("FMCG", na=False))]
+  st.dataframe(highB)
 #if st.button("update"):
 #  conn.update(worksheet="Sheet2",data=high)
 #  st.success("worksheet updated")
