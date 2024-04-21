@@ -186,7 +186,7 @@ col1, col2,col3, col4,col5, col6 = st.columns(6)
 with col1:
 	st.subheader("fmcg")
 	high1 = high.loc[(high["sector"].str.contains("FMCG", na=False))]
-	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	#st.dataframe(hh)
 	#df2=hh.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
 	#st.table(hh)
@@ -194,13 +194,13 @@ with col1:
 	
 	st.subheader("energy")
 	high1 = high.loc[(high["sector"].str.contains("ENERGY", na=False))]
-	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col2:
 	st.subheader("pharma")
 	high1 = high.loc[(high["sector"].str.contains("PHARMA", na=False))]
-	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col3:
