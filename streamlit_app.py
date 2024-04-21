@@ -39,7 +39,7 @@ st.markdown(f"""
         background-color: #00128a;
         color:#ffffff;
         }};
-    div.gdg-s1dgczr6 {{
+    div.st-emotion-cache-ocqkz7 e1f1d6gn5 {{
     	background-color: green;
      	font-size:7px;
     }}
