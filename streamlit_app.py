@@ -180,7 +180,7 @@ if st.button("refresh"):
   st.rerun()
 
 
-col1, col2,col3, col4,col5, col6,col7 = st.columns(7)
+col1, col2,col3, col4,col5, col6 = st.columns(6)
 	
 with col1:
 	st.subheader("fmcg")
@@ -189,6 +189,11 @@ with col1:
 	#st.dataframe(hh)
 	#df2=hh.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
 	#st.table(hh)
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+	
+	st.subheader("energy")
+	high1 = high.loc[(high["sector"].str.contains("ENERGY", na=False))]
+	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col2:
@@ -221,11 +226,7 @@ with col6:
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
-with col7:
-	st.subheader("energy")
-	high1 = high.loc[(high["sector"].str.contains("ENERGY", na=False))]
-	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+
 #if st.button("update"):
 #  conn.update(worksheet="Sheet2",data=high)
 #  st.success("worksheet updated")
