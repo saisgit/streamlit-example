@@ -83,10 +83,10 @@ class NSE():
     else:
       return df
       
-def main():
-	nse = NSE()
-	high = nse.equity_market_data("Securities in F&O")[['open','dayHigh','dayLow','lastPrice','totalTradedVolume','previousClose','pChange']].reset_index()
-	high = high.rename(columns={"totalTradedVolume": "volume",'lastPrice':'Close'})
+def main(high):
+	#nse = NSE()
+	#high = nse.equity_market_data("Securities in F&O")[['open','dayHigh','dayLow','lastPrice','totalTradedVolume','previousClose','pChange']].reset_index()
+	#high = high.rename(columns={"totalTradedVolume": "volume",'lastPrice':'Close'})
 	high = round(high,2)
 	#st.write(high)
 	#conn = st.experimental_connection("gsheets", type=GSheetsConnection)
@@ -258,7 +258,7 @@ def main():
 		hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 		st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
-main()
+#main()
 if st.button("refresh"):
 	st.rerun()
 
@@ -270,6 +270,10 @@ if button:
         while True:
             print("Waiting...")
             #main()
+            nse = NSE()
+            high = nse.equity_market_data("Securities in F&O")[['open','dayHigh','dayLow','lastPrice','totalTradedVolume','previousClose','pChange']].reset_index()
+            high = high.rename(columns={"totalTradedVolume": "volume",'lastPrice':'Close'})
+            main(high)
             if placeholder.button("Stop", key=counter): # otherwise streamlit complains that you're creating two of the same widget
                 break
             #st.rerun()
@@ -277,6 +281,7 @@ if button:
             counter += 1
 
 st.write("stopped")  # in this sample this code never executed
+
 #if st.button("update"):
 #  conn.update(worksheet="Sheet2",data=high)
 #  st.success("worksheet updated")
