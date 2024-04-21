@@ -44,8 +44,8 @@ st.markdown(f"""
      	font-size:7px;
     }}
     td#T_a0b53_row0_col0 {{padding:1px;}}
-    table {{background-color: green;font-size:5px;padding:1px;}}
-    markdown {{background-color: green;font-size:7px;padding:1px;}}
+    table {{background-color: green;font-size:9px;padding:1px;}}
+    markdown {{background-color: green;font-size:9px;padding:1px;}}
     </style>""",
     unsafe_allow_html=True,
 )
