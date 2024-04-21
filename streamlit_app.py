@@ -277,7 +277,7 @@ if button:
             if placeholder.button("Stop", key=counter): # otherwise streamlit complains that you're creating two of the same widget
                 break
             #st.rerun()
-            time.sleep(15)
+            time.sleep(5)
             counter += 1
 
 st.write("stopped")  # in this sample this code never executed
