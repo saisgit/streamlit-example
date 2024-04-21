@@ -17,7 +17,16 @@ def datetotimestamp(date):
 
 def timstamptodate(timestamp):
     return datetime.fromtimestamp(timestamp)
-  
+
+def sendtelegram(message):
+    TOKEN = '5649614993:AAFqKCPokaGKxdKlQitcbFIBSV_73KXmhpg'
+    #chat_id = '646254361' #sai
+    chat_id = -1001727416442 #channel
+    #chat_id = -1001936050171 #group
+    message = message.replace('&','_')
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}&parse_mode=html"
+    print(requests.get(url).json())
+
 class Moneycontrol:
   def __init__(self):
     self.headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36'}
