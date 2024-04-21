@@ -259,6 +259,9 @@ def main():
 		st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 main()
+if st.button("refresh"):
+	st.rerun()
+
 button = st.button("Start Refresh")
 placeholder = st.empty()
 if button:
@@ -266,10 +269,10 @@ if button:
         counter = 0
         while True:
             print("Waiting...")
-            main()
+            #main()
             if placeholder.button("Stop", key=counter): # otherwise streamlit complains that you're creating two of the same widget
                 break
-            st.rerun()
+            #st.rerun()
             time.sleep(15)
             counter += 1
 
