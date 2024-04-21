@@ -145,7 +145,7 @@ else:
 	high = high[(high["N50"].str.contains("Y", na=False))]
 
 #high = high.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m','sector']]
-high['pChange'] = high['pChange'].apply(lambda x: "{:,.2f}".format(x))
+high['pCh'] = high['pChange'].apply(lambda x: "{:,.2f}".format(x))
 highB = high[(high["signal"].str.contains("BUY", na=False))]
 highS = high[(high["signal"].str.contains("SELL", na=False))]
 #highB = high2[high2["signal"].astype(str).str.contains("BUY")]
@@ -159,7 +159,7 @@ with col1:
   #df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   #st.table(df2)
   #s = st.dataframe(filter_nifty(highS))
-  s = highS.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m','sector']]
+  s = highS.loc[:,['symbol','sig','pCh','hourPvt','sdist','bb15m','bbands15m','sector']]
   #s = s.style.applymap(highlight, subset=['sig'])
   st.dataframe(s)
   
@@ -171,7 +171,7 @@ with col2:
   # df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   # st.table(df2)
   #b = st.dataframe(filter_nifty(highB))
-  b = highB.loc[:,['symbol','sig','pChange','hourPvt','sdist','bb15m','bbands15m','sector']]
+  b = highB.loc[:,['symbol','sig','pCh','hourPvt','sdist','bb15m','bbands15m','sector']]
   #st.dataframe(filter_dataframe(s))
   #b = b.style.applymap(highlight, subset=['sig'])
   st.dataframe(b)
@@ -206,25 +206,25 @@ with col2:
 with col3:
 	st.subheader("media")
 	high1 = high.loc[(high["sector"].str.contains("MEDIA", na=False))]
-	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col4:
 	st.subheader("IT")
 	high1 = high.loc[(high["sector"].str.contains("IT", na=False))]
-	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col5:
 	st.subheader("oilgas")
 	high1 = high.loc[(high["sector"].str.contains("OILnGAS", na=False))]
-	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col6:
 	st.subheader("infra")
 	high1 = high.loc[(high["sector"].str.contains("INFRA", na=False))]
-	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 
