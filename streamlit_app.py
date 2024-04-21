@@ -43,7 +43,7 @@ st.markdown(f"""
     	background-color: green;
      	font-size:7px;
     }}
-    table {{background-color: #f0f0f0;font-size:5px;}}
+    table {{background-color: green;font-size:7px;}}
     </style>""",
     unsafe_allow_html=True,
 )
