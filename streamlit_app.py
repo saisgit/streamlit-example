@@ -189,7 +189,8 @@ with col1:
 	#st.dataframe(hh)
 	#df2=hh.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
 	#st.table(hh)
-	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+	#st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+	hh.to_markdown(floatfmt=".2f")
 	
 	st.subheader("energy")
 	high1 = high.loc[(high["sector"].str.contains("ENERGY", na=False))]
