@@ -171,49 +171,59 @@ with col2:
 
 if st.button("refresh"):
   st.rerun()
-col1, col2,col3, col4,col5, col6,col7 = st.columns(7)
 
-with col1:
-  st.subheader("fmcg")
-  high1 = high.loc[(high["sector"].str.contains("FMCG", na=False))]
-  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-  st.dataframe(hh)
-
-with col2:
-  st.subheader("pharma")
-  high1 = high.loc[(high["sector"].str.contains("PHARMA", na=False))]
-  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-  st.dataframe(hh)
-
-with col3:
-  st.subheader("media")
-  high1 = high.loc[(high["sector"].str.contains("MEDIA", na=False))]
-  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-  st.dataframe(hh)
-
-with col4:
-  st.subheader("IT")
-  high1 = high.loc[(high["sector"].str.contains("IT", na=False))]
-  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-  st.dataframe(hh)
-
-with col5:
-  st.subheader("oilgas")
-  high1 = high.loc[(high["sector"].str.contains("OILnGAS", na=False))]
-  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-  st.dataframe(hh)
-
-with col6:
-  st.subheader("infra")
-  high1 = high.loc[(high["sector"].str.contains("INFRA", na=False))]
-  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-  st.dataframe(hh)
-
-with col7:
-  st.subheader("energy")
-  high1 = high.loc[(high["sector"].str.contains("ENERGY", na=False))]
-  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-  st.dataframe(hh)
+with stylable_container(
+        key="container_with_border",
+        css_styles="""
+            button {
+                background-color: green;
+		font-size:7px;
+            }
+            """,
+    ):
+	col1, col2,col3, col4,col5, col6,col7 = st.columns(7)
+	
+	with col1:
+	  st.subheader("fmcg")
+	  high1 = high.loc[(high["sector"].str.contains("FMCG", na=False))]
+	  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	  st.dataframe(hh)
+	
+	with col2:
+	  st.subheader("pharma")
+	  high1 = high.loc[(high["sector"].str.contains("PHARMA", na=False))]
+	  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	  st.dataframe(hh)
+	
+	with col3:
+	  st.subheader("media")
+	  high1 = high.loc[(high["sector"].str.contains("MEDIA", na=False))]
+	  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	  st.dataframe(hh)
+	
+	with col4:
+	  st.subheader("IT")
+	  high1 = high.loc[(high["sector"].str.contains("IT", na=False))]
+	  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	  st.dataframe(hh)
+	
+	with col5:
+	  st.subheader("oilgas")
+	  high1 = high.loc[(high["sector"].str.contains("OILnGAS", na=False))]
+	  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	  st.dataframe(hh)
+	
+	with col6:
+	  st.subheader("infra")
+	  high1 = high.loc[(high["sector"].str.contains("INFRA", na=False))]
+	  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	  st.dataframe(hh)
+	
+	with col7:
+	  st.subheader("energy")
+	  high1 = high.loc[(high["sector"].str.contains("ENERGY", na=False))]
+	  hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
+	  st.dataframe(hh)
 #if st.button("update"):
 #  conn.update(worksheet="Sheet2",data=high)
 #  st.success("worksheet updated")
