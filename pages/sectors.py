@@ -10,6 +10,7 @@ import urllib
 from datetime import datetime, timedelta
 from datetime import date
 import sys
+from streamlit_gsheets import GSheetsConnection
 
 def datetotimestamp(date):
     time_tuple = date.timetuple()
@@ -177,6 +178,7 @@ def main(previous_day_dmy):
 	end = time.time()
 	st.write("Time Taken:{}".format(end - start))
 	return fulldf
+
 
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 previous_day_dmy = st.text_input('previous_day_dmy', '19042024')
