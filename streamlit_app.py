@@ -62,7 +62,7 @@ def get_data():
     df = pd.DataFrame(data)
     return df
 
-st.autorefresh(interval=1 * 5 * 1000, key="")
+st.autorefresh(interval=1 * 5 * 1000)
 class NSE():
   pre_market_categories = ['NIFTY 50','Nifty Bank','Emerge','Securities in F&O','Others','All']
   equity_market_categories = []
