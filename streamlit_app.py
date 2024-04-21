@@ -39,6 +39,10 @@ st.markdown(f"""
         background-color: #00128a;
         color:#ffffff;
         }};
+    div.gdg-s1dgczr6 {{
+    	background-color: green;
+     	font-size:7px;
+    }}
     table {{background-color: #f0f0f0;font-size:5px;}}
     </style>""",
     unsafe_allow_html=True,
