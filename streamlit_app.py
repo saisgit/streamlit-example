@@ -202,10 +202,18 @@ with col2:
 	high1 = high.loc[(high["sector"].str.contains("PHARMA", na=False))]
 	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+	st.subheader("realty")
+	high1 = high.loc[(high["sector"].str.contains("REALTY", na=False))]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col3:
 	st.subheader("media")
 	high1 = high.loc[(high["sector"].str.contains("MEDIA", na=False))]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+	st.subheader("consumr")
+	high1 = high.loc[(high["sector"].str.contains("CONSUMER DURABLES", na=False))]
 	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
@@ -214,16 +222,28 @@ with col4:
 	high1 = high.loc[(high["sector"].str.contains("IT", na=False))]
 	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+	st.subheader("bank")
+	high1 = high.loc[(high["sector"].str.contains("BANK", na=False))]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col5:
 	st.subheader("oilgas")
 	high1 = high.loc[(high["sector"].str.contains("OILnGAS", na=False))]
 	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+	st.subheader("auto")
+	high1 = high.loc[(high["sector"].str.contains("AUTO", na=False))]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col6:
 	st.subheader("infra")
 	high1 = high.loc[(high["sector"].str.contains("INFRA", na=False))]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+	st.subheader("fin")
+	high1 = high.loc[(high["sector"].str.contains("FINANCE", na=False))]
 	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
