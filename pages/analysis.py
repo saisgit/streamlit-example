@@ -359,7 +359,7 @@ def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy,fnostocks):
         bb_df['SMA_20_1hr_dist'] = np.where((bb_df['SMA_20_1hr_d'].astype(float) >=float(-0.5)) & (bb_df['SMA_20_1hr_d'].astype(float) <=float(0.5)), "P1",np.where((bb_df['SMA_20_1hr_d'].astype(float) >=float(-1)) & (bb_df['SMA_20_1hr_d'].astype(float) <=float(1)),"P2",np.where((bb_df['SMA_20_1hr_d'].astype(float) >=float(-1.5)) & (bb_df['SMA_20_1hr_d'].astype(float) <=float(1.5)),"P3","")))
         bb_df['date'] = str("'")+str(current_day_dmy)+str("'")
         secdf = getsectors()
-        bb_df = bb_df.set_index('symbol').join(secdf.set_index('symbol'), on='symbol',how='left_outer')
+        bb_df = bb_df.set_index('symbol').join(secdf.set_index('symbol'), on='symbol',how='left')
         bb_df.reset_index(inplace=True)
         fulldf = bb_df.loc[:,['symbol','date','sector','go','pp_dist','SMA_50_15m_dist','SMA_20_1hr_dist','rdist','sdist','bb5mdiff','bbands15m','todayshock','shock','dayvol','cls_5m_r2','hourPvt','dayPvt','bb_crs','N50','candle','ema50vwap','ev','pr_dist_hr','ps_dist_hr','BBU_5min','BBL_5min','BBU_50_15m','BBL_50_15m','pp_hour','r1_hour','r2_hour','s1_hour','s2_hour','r1','s1','Yesthigh_price','Yestlow_price','Yestclose_price']]
         fulldf = fulldf.drop_duplicates()
