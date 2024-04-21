@@ -191,7 +191,9 @@ if st.button("Get Sector Data"):
 	st.write("DB updated")
 
 data = conn.read(worksheet="sectors",usecols=list(range(15)),ttl="0").dropna(how="all")
-st.write(data)
+df = st.dataframe(data)
+df['date'] = df['date'].astype(int)
+st.write(df)
 # button = st.button("start")
 # placeholder = st.empty()
 # if button:
