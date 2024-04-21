@@ -43,6 +43,7 @@ st.markdown(f"""
     	background-color: green;
      	font-size:7px;
     }}
+    td#T_a0b53_row0_col0 {{padding:1px;}}
     table {{background-color: green;font-size:5px;padding:1px;}}
     markdown {{background-color: green;font-size:7px;padding:1px;}}
     </style>""",
