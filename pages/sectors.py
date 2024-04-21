@@ -172,7 +172,7 @@ def main(previous_day_dmy):
 	]
 	choices = ['NIFTY CONSR DURBL', 'NIFTY FIN SERVICE', 'NIFTY FINSRV25 50', 'NIFTY IT', 'NIFTY PHARMA', 'NIFTY AUTO', 'NIFTY HEALTHCARE', 'NIFTY FMCG', 'NIFTY REALTY', 'NIFTY METAL', 'NIFTY BANK', 'NIFTY MEDIA', 'NIFTY OIL AND GAS', 'NIFTY PSU BANK']
 	fulldf['nsymbol'] = np.select(conditions, choices, default='')
-	fulldf['date'] = previous_day_dmy
+	fulldf['date'] = str(previous_day_dmy)
 	fulldf = fulldf.loc[:, ['nsymbol','symbol','date','Yesthigh_price','Yestlow_price','Yestclose_price','pp','r1','s1','bbands15m','BBU_50_15m','BBL_50_15m','bbsqz','cpr']]
 	fulldf = fulldf.sort_values(by=['bbands15m'], ascending=True)
 	end = time.time()
