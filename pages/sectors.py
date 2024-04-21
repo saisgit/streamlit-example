@@ -171,20 +171,26 @@ def main(previous_day_dmy):
 	]
 	choices = ['NIFTY CONSR DURBL', 'NIFTY FIN SERVICE', 'NIFTY FINSRV25 50', 'NIFTY IT', 'NIFTY PHARMA', 'NIFTY AUTO', 'NIFTY HEALTHCARE', 'NIFTY FMCG', 'NIFTY REALTY', 'NIFTY METAL', 'NIFTY BANK', 'NIFTY MEDIA', 'NIFTY OIL AND GAS', 'NIFTY PSU BANK']
 	fulldf['nsymbol'] = np.select(conditions, choices, default='')
-	fulldf = fulldf.loc[:, ['nsymbol','symbol','Yesthigh_price','Yestlow_price','Yestclose_price','pp','r1','s1','bbands15m','BBU_50_15m','BBL_50_15m','bbsqz','cpr']]
+	fulldf['date'] = previous_day_dmy
+	fulldf = fulldf.loc[:, ['nsymbol','symbol','date','Yesthigh_price','Yestlow_price','Yestclose_price','pp','r1','s1','bbands15m','BBU_50_15m','BBL_50_15m','bbsqz','cpr']]
 	fulldf = fulldf.sort_values(by=['bbands15m'], ascending=True)
 	end = time.time()
 	st.write("Time Taken:{}".format(end - start))
 	return fulldf
 
-
-previous_day_dmy = st.text_input('previous_day_dmy', '21042024')
+conn = st.experimental_connection("gsheets", type=GSheetsConnection)
+previous_day_dmy = st.text_input('previous_day_dmy', '19042024')
 if st.button("Get Sector Data"):
 	df = main(previous_day_dmy)
-	st.write(df)
+	#st.write(df)
+    	conn.update(worksheet="sectors",data=df)
+	st.write("DB updated")
+
+
+data = conn.read(worksheet="sectors",usecols=list(range(20)),ttl="0").dropna(how="all")
+st.dataframe(data)
 # button = st.button("start")
 # placeholder = st.empty()
-
 # if button:
 #     with st.spinner():
 #         counter = 0
