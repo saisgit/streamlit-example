@@ -183,7 +183,9 @@ with col1:
 	st.subheader("fmcg")
 	high1 = high.loc[(high["sector"].str.contains("FMCG", na=False))]
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.dataframe(hh)
+	#st.dataframe(hh)
+	df2=hh.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
+	st.table(df2)
 	
 with col2:
 	st.subheader("pharma")
