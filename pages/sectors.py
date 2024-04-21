@@ -180,12 +180,12 @@ def main(previous_day_dmy):
 
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 previous_day_dmy = st.text_input('previous_day_dmy', '19042024')
+st.write("Enter previous date of Market run date")
 if st.button("Get Sector Data"):
 	df = main(previous_day_dmy)
 	#st.write(df)
-    	conn.update(worksheet="sectors",data=df)
+	conn.update(worksheet="sectors",data=df)
 	st.write("DB updated")
-
 
 data = conn.read(worksheet="sectors",usecols=list(range(20)),ttl="0").dropna(how="all")
 st.dataframe(data)
