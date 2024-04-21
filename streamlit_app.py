@@ -189,7 +189,7 @@ with col1:
 	#st.dataframe(hh)
 	#df2=hh.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
 	#st.table(hh)
-	hh['pChange'] = df['pChange'].apply(lambda x: "{:,.2f}%".format(x))
+	hh['pChange'] = hh['pChange'].apply(lambda x: "{:,.2f}%".format(x))
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 	st.subheader("energy")
