@@ -266,7 +266,7 @@ if button:
         counter = 0
         while True:
             print("Waiting...")
-	    main()
+            main()
             if placeholder.button("Stop", key=counter): # otherwise streamlit complains that you're creating two of the same widget
                 break
             st.rerun()
