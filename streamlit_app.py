@@ -206,8 +206,16 @@ with col2:
 	high1 = high.loc[(high["sector"].str.contains("REALTY", na=False))]
 	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
 	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+	st.subheader("cons")
+	high1 = high.loc[(high["sector"].str.contains("CONSTRUCTION", na=False))]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	
 with col3:
+	st.subheader("metal")
+	high1 = high.loc[(high["sector"].str.contains("METAL", na=False))]
+	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
+	st.markdown(hh.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 	st.subheader("media")
 	high1 = high.loc[(high["sector"].str.contains("MEDIA", na=False))]
 	hh = high1.loc[:,['symbol','sig','pCh','hourPvt']]
