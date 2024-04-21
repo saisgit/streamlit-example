@@ -43,7 +43,7 @@ st.markdown(f"""
     	background-color: green;
      	font-size:7px;
     }}
-    table {{background-color: green;}}
+    table {{background-color: green;font-size:5px;}}
     </style>""",
     unsafe_allow_html=True,
 )
@@ -191,37 +191,37 @@ with col2:
 	st.subheader("pharma")
 	high1 = high.loc[(high["sector"].str.contains("PHARMA", na=False))]
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.dataframe(hh)
+	st.table(hh)
 	
 with col3:
 	st.subheader("media")
 	high1 = high.loc[(high["sector"].str.contains("MEDIA", na=False))]
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.dataframe(hh)
+	st.table(hh)
 	
 with col4:
 	st.subheader("IT")
 	high1 = high.loc[(high["sector"].str.contains("IT", na=False))]
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.dataframe(hh)
+	st.table(hh)
 	
 with col5:
 	st.subheader("oilgas")
 	high1 = high.loc[(high["sector"].str.contains("OILnGAS", na=False))]
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.dataframe(hh)
+	st.table(hh)
 	
 with col6:
 	st.subheader("infra")
 	high1 = high.loc[(high["sector"].str.contains("INFRA", na=False))]
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.dataframe(hh)
+	st.table(hh)
 	
 with col7:
 	st.subheader("energy")
 	high1 = high.loc[(high["sector"].str.contains("ENERGY", na=False))]
 	hh = high1.loc[:,['symbol','sig','pChange','hourPvt']]
-	st.dataframe(hh)
+	st.table(hh)
 #if st.button("update"):
 #  conn.update(worksheet="Sheet2",data=high)
 #  st.success("worksheet updated")
