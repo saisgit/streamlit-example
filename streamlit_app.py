@@ -172,7 +172,7 @@ with col2:
   # df2=df.style.set_properties(**{'text-align': 'left'}).set_table_styles(styles)
   # st.table(df2)
   #b = st.dataframe(filter_nifty(highB))
-  b = highB.loc[:,['symbol','sig','pCh','hourPvt','sdist','bb15m','bbands15m','sector']]
+  b = highB.loc[:,['symbol','sig','pCh','hourPvt','rdist','bb15m','bbands15m','sector']]
   #st.dataframe(filter_dataframe(s))
   #b = b.style.applymap(highlight, subset=['sig'])
   st.dataframe(b)
