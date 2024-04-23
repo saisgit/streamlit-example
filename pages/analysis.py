@@ -183,6 +183,7 @@ def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy,fnostocks):
     nse = NSE()
     start = time.time()
     fno = nse.equity_market_data(str(fnostocks),symbol_list=True) #'Securities in F&O'
+    fno.remove("LTF")
     n50 = nse.equity_market_data('NIFTY 50',symbol_list=True)
     n50.remove("NIFTY 50")
     #df1 = nse.equity_market_data("Securities in F&O")[['open','dayHigh','dayLow','lastPrice','totalTradedVolume','previousClose']].reset_index()
