@@ -186,6 +186,7 @@ def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy,fnostocks):
     fno.remove("LTF")
     n50 = nse.equity_market_data('NIFTY 50',symbol_list=True)
     n50.remove("NIFTY 50")
+    st.write(fno)
     #df1 = nse.equity_market_data("Securities in F&O")[['open','dayHigh','dayLow','lastPrice','totalTradedVolume','previousClose']].reset_index()
     #df1 = df1.rename(columns={"totalTradedVolume": "volume"})
     df1 = nse.getbhavcopy(previous_day_dmy)
