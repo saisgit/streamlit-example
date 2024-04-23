@@ -193,6 +193,7 @@ def myanalysis(current_day_dmy,previous_day_dmy,dby_day_dmy,fnostocks):
     df1 = df1[df1['symbol'].isin(fno)]
     df1 = round(df1,2)
     all = fno
+    all.remove("LTF")
     ydy = nse.getbhavcopy(previous_day_dmy)
     ydy = ydy[ydy['SYMBOL'].isin(all)]
     ydy.columns = ydy.columns.str.lower()
