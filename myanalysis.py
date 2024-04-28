@@ -163,14 +163,19 @@ def get15minMC(fno,current_day_dmy,flag):
         df['EMA50_15m'] = df['EMA_50']
         df['ema50vwap'] = round((abs(df['EMA50_15m'].astype(float)-df['vwap'].astype(float))/df['EMA50_15m'].astype(float))*100,2)
         df['ev'] = np.where(((df.vwap.astype(float) >= df.EMA50_15m.astype(float))), "up","down")
+        dff = df[df['Datetime'].astype(str).str.contains(str(datetime.strptime(current_day_dmy, '%d%m%Y').date().strftime("%Y-%m-%d")))]
+        df['bb15mHead'] = dff['bbands15m'].iloc[0]
+        df['bbsqz'] = np.where((df.bb15mHead.astype(float) >=df['bbands15m'].astype(float)), "sqz","")
+        df['sqzpct'] = np.where((df.bbsqz =='sqz'), round((df['bb15mHead'].astype(float)-df['bbands15m'].astype(float))/df['bb15mHead'].astype(float),2),"")
+        df['bbsqz'] = df['bbsqz'] +"("+df['sqzpct'].astype(str)+")"
         df = df[df['Datetime'].astype(str).str.contains(str(datetime.strptime(current_day_dmy, '%d%m%Y').date().strftime("%Y-%m-%d")))]
         #print(df)
         df = df.tail(1)
         mydf = pd.concat([mydf,df])
-        mydf = mydf[['symbol','bbands15m','BBU_50_15m','BBL_50_15m','SMA_50_15m','vwap','EMA50_15m','ema50vwap','ev']]
+        mydf = mydf[['symbol','bbands15m','BBU_50_15m','BBL_50_15m','SMA_50_15m','vwap','EMA50_15m','ema50vwap','ev','bbsqz']]
         mydf = round(mydf, 2)
         mydf.reset_index(inplace=True)
-    return mydf.loc[:, ['symbol','bbands15m','BBU_50_15m','BBL_50_15m','SMA_50_15m','vwap','EMA50_15m','ema50vwap','ev']]
+    return mydf.loc[:, ['symbol','bbands15m','BBU_50_15m','BBL_50_15m','SMA_50_15m','vwap','EMA50_15m','ema50vwap','ev','bbsqz']]
 
 # def get1hourMC_bkp(fno,current_day_dmy):
 #     mydf = pd.DataFrame()
